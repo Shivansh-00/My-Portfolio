@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -31,19 +31,19 @@ model Skill {
 }
 
 model Experience {
-  id           String   @id @default(uuid())
+  id           String  @id @default(uuid())
   title        String
   organization String
   startDate    String
   endDate      String?
-  highlights   String[]
+  highlights   String  @default("[]")
 }
 
 model Project {
   id          String  @id @default(uuid())
   name        String
   description String
-  tags        String[]
+  tags        String  @default("[]")
   featured    Boolean @default(false)
   repoUrl     String?
   liveUrl     String?
