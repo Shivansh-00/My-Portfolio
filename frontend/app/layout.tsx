@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Shivansh Srivastava | Gaming Portfolio",
+  title: "Shivansh'Portfolio",
   description:
     "AI Engineer & Full-Stack Developer — An immersive gaming-style portfolio built with Next.js and Three.js.",
   keywords: [
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "gaming portfolio",
   ],
   openGraph: {
-    title: "Shivansh Srivastava | Gaming Portfolio",
+    title: "Shivansh'Portfolio",
     description:
       "AI Engineer & Full-Stack Developer — An immersive gaming-style portfolio.",
     type: "website",
