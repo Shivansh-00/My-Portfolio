@@ -165,70 +165,69 @@ async function main() {
   }
   console.log(`✅ Experience seeded (${experienceData.length} quests)`);
 
-  // ── PROJECTS / Arsenal (from Official Resume) ────────────
+  // ── PROJECTS / Arsenal ─────────────────────────────────────
   const projectData = [
     {
-      name: "Intelligent Option Pricing Platform",
+      name: "Intelligent Option Pricing & Risk Analytics Platform",
       description:
-        "AI-powered option pricing platform using Monte Carlo simulations and NLP-based parameter extraction for accurate financial valuation.",
+        "Research-grade AI-powered financial analytics platform that transforms traditional option pricing into an intelligent, production-ready system. Leverages Monte Carlo simulations for stochastic price modeling and integrates NLP-based parameter extraction to intelligently process financial inputs. Supports advanced risk analytics, volatility modeling, and real-time financial intelligence — bridging quantitative research and AI architecture.",
       tags: JSON.stringify([
         "AI",
-        "Monte Carlo Simulations",
+        "Quant Finance",
+        "Monte Carlo",
+        "Deep Learning",
         "NLP",
-        "Financial Valuation",
-        "Python"
+        "Risk Analytics"
       ]),
       featured: true,
-      repoUrl: "https://github.com/Shivansh-00",
+      repoUrl: "https://github.com/Shivansh-00/Intelligent-Option-Pricing",
       liveUrl: null,
       isVisible: true
     },
     {
-      name: "Smart e-Yantra Digital Twin System",
+      name: "Self-Baseline Intelligence (SBI)",
       description:
-        "Real-time digital twin system integrating IoT hardware with 3D simulations. WebSocket-based communication achieving sub-100ms latency.",
+        "NLP-driven system that detects gradual cognitive compression by comparing users against their own historical language patterns. Rather than analyzing content meaning, it measures structural and semantic shifts in language, generating a Cognitive Compression Index (CCI) to quantify long-term drift with explainable summaries.",
       tags: JSON.stringify([
-        "IoT",
-        "3D Simulation",
-        "Real-time Data Processing",
-        "WebSockets",
-        "Digital Twin"
-      ]),
-      featured: true,
-      repoUrl: "https://github.com/Shivansh-00",
-      liveUrl: null,
-      isVisible: true
-    },
-    {
-      name: "Web App Security Assessment Framework",
-      description:
-        "Security assessment tool addressing OWASP Top 10 vulnerabilities with automated vulnerability scanning and actionable security report generation.",
-      tags: JSON.stringify([
-        "Cybersecurity",
-        "OWASP Top 10",
-        "Penetration Testing",
+        "NLP",
+        "Cognitive Drift Detection",
+        "Explainable AI",
         "Python",
-        "Automation"
+        "Linguistic Analysis"
       ]),
       featured: true,
-      repoUrl: "https://github.com/Shivansh-00",
+      repoUrl: "https://github.com/Shivansh-00/Self-Baseline-Intelligence",
       liveUrl: null,
       isVisible: true
     },
     {
-      name: "AI-Powered Portfolio",
+      name: "AI Productivity OS – Intelligent To-Do System",
       description:
-        "Cyberpunk-themed portfolio with Three.js 3D backgrounds, procedural audio engine, and gaming-style UI. Built with Next.js 14, Express.js, Prisma ORM, and real-time GitHub/LeetCode stats.",
+        "AI-powered task management backend designed as a foundation for a next-generation Productivity Operating System. Features versioned FastAPI endpoints, nested task structures, AI-powered task breakdown & effort estimation, real-time updates via WebSockets, and behavioral analytics to detect procrastination and burnout signals.",
       tags: JSON.stringify([
-        "Next.js",
-        "Three.js",
-        "TypeScript",
-        "Express.js",
-        "Prisma",
-        "Tailwind CSS"
+        "FastAPI",
+        "Real-Time Systems",
+        "Behavioral Analytics",
+        "AI",
+        "WebSockets"
+      ]),
+      featured: true,
+      repoUrl: "https://github.com/Shivansh-00/To-Do-List",
+      liveUrl: null,
+      isVisible: true
+    },
+    {
+      name: "Hunger Help – Social Impact Platform",
+      description:
+        "Web-based platform designed to address food insecurity by connecting restaurants, shelters, and communities in need. Streamlines meal distribution and improves access to nourishment for underprivileged populations through accessible, scalable, and social impact-focused technology.",
+      tags: JSON.stringify([
+        "Web Development",
+        "Humanitarian Tech",
+        "Scalable Design",
+        "Social Impact"
       ]),
       featured: false,
-      repoUrl: "https://github.com/Shivansh-00/My-Portfolio",
+      repoUrl: "https://github.com/Shivansh-00/Hunger_Help",
       liveUrl: null,
       isVisible: true
     }

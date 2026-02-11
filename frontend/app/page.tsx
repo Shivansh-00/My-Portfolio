@@ -5,6 +5,8 @@ import SkillsSection from "@/components/skills-section";
 import ExperienceSection from "@/components/experience-section";
 import ProjectsSection from "@/components/projects-section";
 import ContactSection from "@/components/contact-section";
+import CyberGame from "@/components/cyber-game";
+import BreachGateway from "@/components/breach-gateway";
 import GamingShell from "@/components/gaming-shell";
 
 export default async function HomePage() {
@@ -71,7 +73,17 @@ export default async function HomePage() {
         </div>
       </div>
 
-      <ProjectsSection projects={projects} />
+      <BreachGateway>
+        <ProjectsSection projects={projects} />
+      </BreachGateway>
+
+      <div className="relative py-4 lg:pl-20">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="cyber-divider" />
+        </div>
+      </div>
+
+      <CyberGame />
 
       <div className="relative py-4 lg:pl-20">
         <div className="max-w-6xl mx-auto px-4">

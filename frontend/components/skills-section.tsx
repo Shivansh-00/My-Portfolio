@@ -30,7 +30,7 @@ function SkillOrb({ skill, index, inView }: { skill: string; index: number; inVi
         boxShadow: "0 0 20px rgba(0,240,255,0.4), 0 0 40px rgba(0,240,255,0.1)",
       }}
       className="gaming-tag cursor-default select-none transition-all duration-200
-                 hover:bg-neon-cyan/10 hover:text-neon-cyan hover:border-neon-cyan/60"
+                 hover:bg-neon-cyan/10 hover:text-neon-cyan hover:border-neon-cyan/60 power-flash"
     >
       {skill}
     </motion.div>

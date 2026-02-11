@@ -51,7 +51,7 @@ function QuestCard({
       </div>
 
       {/* Card */}
-      <div className={`gaming-card ${isActive ? "" : "gaming-card-green"} mb-8`}>
+      <div className={`gaming-card data-stream glass-morph ${isActive ? "" : "gaming-card-green"} mb-8`}>
         <div className="hud-corner hud-corner-tl" />
         <div className="hud-corner hud-corner-br" />
 

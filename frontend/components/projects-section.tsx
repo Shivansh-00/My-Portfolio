@@ -23,7 +23,7 @@ function ProjectCard({
       transition={{ duration: 0.6, delay: index * 0.15 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`gaming-card group cursor-pointer ${
+      className={`gaming-card group cursor-pointer magnetic-hover holo-shimmer ${
         project.featured ? "" : "gaming-card-green"
       }`}
     >

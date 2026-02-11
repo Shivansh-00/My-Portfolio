@@ -29,31 +29,59 @@ const AudioCtx = createContext<AudioContextValue>({
 export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const engineRef = useRef(getAudioEngine());
+  const engineRef = useRef<ReturnType<typeof getAudioEngine> | null>(null);
+  const initRef = useRef(false);
+
+  // Lazy-init engine only on client after first user gesture
+  const getEngine = useCallback(() => {
+    if (!engineRef.current) {
+      engineRef.current = getAudioEngine();
+    }
+    return engineRef.current;
+  }, []);
+
+  // Initialize audio context on first user interaction (browser autoplay policy)
+  useEffect(() => {
+    const handleFirstInteraction = () => {
+      if (!initRef.current) {
+        initRef.current = true;
+        getEngine().init();
+      }
+    };
+    document.addEventListener("click", handleFirstInteraction, { once: true });
+    document.addEventListener("touchstart", handleFirstInteraction, { once: true });
+    document.addEventListener("keydown", handleFirstInteraction, { once: true });
+    return () => {
+      document.removeEventListener("click", handleFirstInteraction);
+      document.removeEventListener("touchstart", handleFirstInteraction);
+      document.removeEventListener("keydown", handleFirstInteraction);
+    };
+  }, [getEngine]);
 
   const toggleAmbient = useCallback(() => {
-    const engine = engineRef.current;
+    const engine = getEngine();
     if (engine.isPlaying) {
       engine.stopAmbient();
       setIsPlaying(false);
     } else {
+      engine.init(); // ensure context is alive
       engine.startAmbient();
       setIsPlaying(true);
     }
-  }, []);
+  }, [getEngine]);
 
   const toggleMute = useCallback(() => {
-    const muted = engineRef.current.toggleMute();
+    const muted = getEngine().toggleMute();
     setIsMuted(muted);
-  }, []);
+  }, [getEngine]);
 
   const playSfx = useCallback((name: SoundName) => {
-    engineRef.current.playSfx(name);
-  }, []);
+    getEngine().playSfx(name);
+  }, [getEngine]);
 
   useEffect(() => {
     return () => {
-      engineRef.current.dispose();
+      engineRef.current?.dispose();
     };
   }, []);
 

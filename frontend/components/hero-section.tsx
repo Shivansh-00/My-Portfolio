@@ -137,7 +137,7 @@ export default function HeroSection({ profile }: { profile: Profile }) {
             href={profile.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="gaming-btn"
+            className="gaming-btn liquid-btn"
             {...sfx.hover}
             onClick={() => sfx.play("click")}
           >
@@ -147,7 +147,7 @@ export default function HeroSection({ profile }: { profile: Profile }) {
             href={profile.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="gaming-btn"
+            className="gaming-btn liquid-btn"
             {...sfx.hover}
             onClick={() => sfx.play("click")}
           >
@@ -157,7 +157,7 @@ export default function HeroSection({ profile }: { profile: Profile }) {
             href={profile.leetcode}
             target="_blank"
             rel="noopener noreferrer"
-            className="gaming-btn"
+            className="gaming-btn liquid-btn"
             {...sfx.hover}
             onClick={() => sfx.play("click")}
           >
@@ -165,7 +165,7 @@ export default function HeroSection({ profile }: { profile: Profile }) {
           </a>
           <a
             href={`mailto:${profile.email}`}
-            className="gaming-btn"
+            className="gaming-btn liquid-btn"
             {...sfx.hover}
             onClick={() => sfx.play("click")}
           >

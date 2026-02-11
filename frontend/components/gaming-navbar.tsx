@@ -10,6 +10,7 @@ const navItems = [
   { label: "SKILLS", href: "#skills", icon: "⬡" },
   { label: "QUESTS", href: "#experience", icon: "⚔" },
   { label: "ARSENAL", href: "#projects", icon: "⬢" },
+  { label: "GAME", href: "#game", icon: "🎮" },
   { label: "CONTACT", href: "#contact", icon: "◇" },
 ];
 
