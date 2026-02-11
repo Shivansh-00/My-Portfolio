@@ -1,19 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   color-scheme: dark;
+  --neon-cyan: #00f0ff;
+  --neon-magenta: #ff00e5;
+  --neon-green: #39ff14;
+  --neon-orange: #ff6a00;
+  --gaming-dark: #0a0a0f;
+  --gaming-panel: #111118;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 240, 255, 0.3) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.6);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  @apply bg-slate-950 text-slate-100 antialiased;
+  @apply bg-gaming-dark text-slate-100 antialiased font-body;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(0, 240, 255, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(255, 0, 229, 0.02) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(57, 255, 20, 0.02) 0%, transparent 50%);
+  background-attachment: fixed;
 }
 
-.section-title {
-  @apply text-2xl font-semibold tracking-tight;
+@layer components {
+  .gaming-section {
+    @apply relative overflow-hidden;
+  }
+
+  .gaming-card {
+    @apply relative rounded-lg border border-gaming-border bg-gaming-card/80
+           backdrop-blur-sm p-6 transition-all duration-300;
+    box-shadow: 0 0 0 1px rgba(0, 240, 255, 0.05);
+  }
+
+  .gaming-card:hover {
+    border-color: rgba(0, 240, 255, 0.4);
+    box-shadow:
+      0 0 15px rgba(0, 240, 255, 0.1),
+      0 0 30px rgba(0, 240, 255, 0.05),
+      inset 0 0 15px rgba(0, 240, 255, 0.03);
+  }
+
+  .gaming-card-magenta:hover {
+    border-color: rgba(255, 0, 229, 0.4);
+    box-shadow:
+      0 0 15px rgba(255, 0, 229, 0.1),
+      0 0 30px rgba(255, 0, 229, 0.05),
+      inset 0 0 15px rgba(255, 0, 229, 0.03);
+  }
+
+  .gaming-card-green:hover {
+    border-color: rgba(57, 255, 20, 0.4);
+    box-shadow:
+      0 0 15px rgba(57, 255, 20, 0.1),
+      0 0 30px rgba(57, 255, 20, 0.05),
+      inset 0 0 15px rgba(57, 255, 20, 0.03);
+  }
+
+  .section-heading {
+    @apply font-gaming text-2xl md:text-3xl font-bold uppercase tracking-wider;
+    background: linear-gradient(135deg, #00f0ff, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-heading::before {
+    content: '// ';
+    -webkit-text-fill-color: rgba(0, 240, 255, 0.4);
+  }
+
+  .neon-text-cyan {
+    color: #00f0ff;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3);
+  }
+
+  .neon-text-magenta {
+    color: #ff00e5;
+    text-shadow: 0 0 10px rgba(255, 0, 229, 0.5), 0 0 20px rgba(255, 0, 229, 0.3);
+  }
+
+  .neon-text-green {
+    color: #39ff14;
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.5), 0 0 20px rgba(57, 255, 20, 0.3);
+  }
+
+  .neon-border {
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.1), inset 0 0 10px rgba(0, 240, 255, 0.05);
+  }
+
+  .gaming-btn {
+    @apply relative font-gaming text-sm uppercase tracking-widest px-8 py-3
+           border border-neon-cyan/50 text-neon-cyan bg-transparent
+           transition-all duration-300 overflow-hidden;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .gaming-btn:hover {
+    @apply bg-neon-cyan/10 border-neon-cyan text-white;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3), 0 0 40px rgba(0, 240, 255, 0.1);
+  }
+
+  .gaming-btn::before {
+    content: '';
+    @apply absolute inset-0 bg-neon-cyan/5;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .gaming-btn:hover::before {
+    transform: translateX(0);
+  }
+
+  .hud-corner {
+    @apply absolute w-4 h-4;
+  }
+
+  .hud-corner::before,
+  .hud-corner::after {
+    content: '';
+    @apply absolute bg-neon-cyan/50;
+  }
+
+  .hud-corner-tl {
+    @apply top-0 left-0;
+  }
+  .hud-corner-tl::before { @apply top-0 left-0 w-4 h-px; }
+  .hud-corner-tl::after  { @apply top-0 left-0 w-px h-4; }
+
+  .hud-corner-tr {
+    @apply top-0 right-0;
+  }
+  .hud-corner-tr::before { @apply top-0 right-0 w-4 h-px; }
+  .hud-corner-tr::after  { @apply top-0 right-0 w-px h-4; }
+
+  .hud-corner-bl {
+    @apply bottom-0 left-0;
+  }
+  .hud-corner-bl::before { @apply bottom-0 left-0 w-4 h-px; }
+  .hud-corner-bl::after  { @apply bottom-0 left-0 w-px h-4; }
+
+  .hud-corner-br {
+    @apply bottom-0 right-0;
+  }
+  .hud-corner-br::before { @apply bottom-0 right-0 w-4 h-px; }
+  .hud-corner-br::after  { @apply bottom-0 right-0 w-px h-4; }
+
+  .gaming-tag {
+    @apply font-mono text-xs px-3 py-1 border border-neon-cyan/30 text-neon-cyan/80
+           bg-neon-cyan/5 uppercase tracking-wider;
+  }
+
+  .gaming-input {
+    @apply w-full bg-gaming-dark border border-gaming-border px-4 py-3
+           font-body text-slate-200 placeholder-slate-600
+           focus:outline-none focus:border-neon-cyan/50 transition-all duration-300;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .gaming-input:focus {
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 240, 255, 0.1);
+  }
+
+  .xp-bar {
+    @apply relative h-2 bg-gaming-dark rounded-full overflow-hidden;
+  }
+
+  .xp-bar-fill {
+    @apply h-full rounded-full transition-all duration-1000 ease-out;
+    background: linear-gradient(90deg, #00f0ff, #a855f7);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+  }
+
+  .grid-overlay {
+    @apply pointer-events-none absolute inset-0;
+    background-image:
+      linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
 }
 
-.section-card {
-  @apply rounded-2xl border border-slate-800 bg-slate-900/60 p-6 shadow-lg;
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  animation: glitch-shift 3s infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  color: #ff00e5;
+  opacity: 0.5;
+}
+
+.glitch-text::after {
+  animation: glitch-shift 3s infinite reverse;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  color: #00f0ff;
+  opacity: 0.5;
+}
+
+@keyframes glitch-shift {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, 2px); }
+  80% { transform: translate(1px, -2px); }
+}
+
+.noise-bg::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.015;
+  pointer-events: none;
+  z-index: 100;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+.scan-lines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 240, 255, 0.008) 2px,
+    rgba(0, 240, 255, 0.008) 4px
+  );
 }

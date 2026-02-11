@@ -5,6 +5,7 @@ import SkillsSection from "@/components/skills-section";
 import ExperienceSection from "@/components/experience-section";
 import ProjectsSection from "@/components/projects-section";
 import ContactSection from "@/components/contact-section";
+import GamingShell from "@/components/gaming-shell";
 
 export default async function HomePage() {
   const fallbackProfile = {
@@ -36,13 +37,49 @@ export default async function HomePage() {
     ]);
 
   return (
-    <main className="space-y-16 px-6 py-10 md:px-16">
+    <GamingShell>
       <HeroSection profile={profile} />
+
+      {/* Divider */}
+      <div className="relative py-4 lg:pl-20">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="h-px bg-gradient-to-r from-transparent via-neon-cyan/20 to-transparent" />
+        </div>
+      </div>
+
       <StatsSection github={github} leetcode={leetcode} />
+
+      <div className="relative py-4 lg:pl-20">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="h-px bg-gradient-to-r from-transparent via-neon-magenta/20 to-transparent" />
+        </div>
+      </div>
+
       <SkillsSection skills={skills} />
+
+      <div className="relative py-4 lg:pl-20">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="h-px bg-gradient-to-r from-transparent via-neon-green/20 to-transparent" />
+        </div>
+      </div>
+
       <ExperienceSection experience={experience} />
+
+      <div className="relative py-4 lg:pl-20">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="h-px bg-gradient-to-r from-transparent via-neon-cyan/20 to-transparent" />
+        </div>
+      </div>
+
       <ProjectsSection projects={projects} />
+
+      <div className="relative py-4 lg:pl-20">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="h-px bg-gradient-to-r from-transparent via-neon-magenta/20 to-transparent" />
+        </div>
+      </div>
+
       <ContactSection profile={profile} />
-    </main>
+    </GamingShell>
   );
 }

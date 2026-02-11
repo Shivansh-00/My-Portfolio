@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion, AnimatePresence } from "framer-motion";
+import { useSfx } from "@/lib/use-sfx";
 
 const schema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -20,6 +22,7 @@ export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
     "idle"
   );
+  const sfx = useSfx();
   const {
     register,
     handleSubmit,
@@ -28,9 +31,7 @@ export default function ContactForm() {
   } = useForm<FormValues>({ resolver: zodResolver(schema) });
 
   const onSubmit = async (values: FormValues) => {
-    if (values.company) {
-      return;
-    }
+    if (values.company) return;
 
     try {
       setStatus("sending");
@@ -43,62 +44,114 @@ export default function ContactForm() {
       if (!res.ok) throw new Error("Request failed");
 
       setStatus("sent");
+      sfx.play("success");
       reset();
     } catch (error) {
       console.error(error);
       setStatus("error");
+      sfx.play("error");
     }
   };
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
       <input type="text" className="hidden" tabIndex={-1} {...register("company")} />
+
+      {/* Name field */}
       <div>
-        <label className="text-sm text-slate-400">Name</label>
+        <label className="font-mono text-[10px] uppercase tracking-widest text-slate-600 mb-2 block">
+          Player_Name
+        </label>
         <input
-          className="mt-2 w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2"
+          className="gaming-input"
+          placeholder="Enter your name..."
           {...register("name")}
         />
         {errors.name && (
-          <p className="mt-1 text-xs text-red-400">{errors.name.message}</p>
+          <p className="mt-1 font-mono text-xs text-neon-red">{errors.name.message}</p>
         )}
       </div>
+
+      {/* Email field */}
       <div>
-        <label className="text-sm text-slate-400">Email</label>
+        <label className="font-mono text-[10px] uppercase tracking-widest text-slate-600 mb-2 block">
+          Comms_Channel
+        </label>
         <input
-          className="mt-2 w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2"
+          className="gaming-input"
+          placeholder="your@email.com"
           {...register("email")}
         />
         {errors.email && (
-          <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>
+          <p className="mt-1 font-mono text-xs text-neon-red">{errors.email.message}</p>
         )}
       </div>
+
+      {/* Message field */}
       <div>
-        <label className="text-sm text-slate-400">Message</label>
+        <label className="font-mono text-[10px] uppercase tracking-widest text-slate-600 mb-2 block">
+          Transmission
+        </label>
         <textarea
-          rows={4}
-          className="mt-2 w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2"
+          rows={5}
+          className="gaming-input resize-none"
+          placeholder="Type your message..."
           {...register("message")}
         />
         {errors.message && (
-          <p className="mt-1 text-xs text-red-400">{errors.message.message}</p>
+          <p className="mt-1 font-mono text-xs text-neon-red">{errors.message.message}</p>
         )}
       </div>
+
+      {/* Submit button */}
       <button
         type="submit"
-        className="rounded-full bg-brand-500 px-6 py-2 text-sm font-semibold text-white"
+        className="gaming-btn w-full"
         disabled={status === "sending"}
       >
-        {status === "sending" ? "Sending..." : "Send message"}
+        {status === "sending" ? (
+          <span className="flex items-center justify-center gap-2">
+            <motion.span
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              className="inline-block"
+            >
+              ◈
+            </motion.span>
+            Transmitting...
+          </span>
+        ) : (
+          "◇ Send Transmission"
+        )}
       </button>
-      {status === "sent" && (
-        <p className="text-sm text-emerald-400">Message sent successfully.</p>
-      )}
-      {status === "error" && (
-        <p className="text-sm text-red-400">
-          Something went wrong. Please try again.
-        </p>
-      )}
+
+      {/* Status messages */}
+      <AnimatePresence>
+        {status === "sent" && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="p-3 border border-neon-green/30 bg-neon-green/5"
+          >
+            <p className="font-mono text-xs neon-text-green flex items-center gap-2">
+              <span>✓</span> TRANSMISSION SUCCESSFUL — MESSAGE DELIVERED
+            </p>
+          </motion.div>
+        )}
+        {status === "error" && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="p-3 border border-neon-red/30 bg-neon-red/5"
+          >
+            <p className="font-mono text-xs text-neon-red flex items-center gap-2">
+              <span>✗</span> TRANSMISSION FAILED — RETRY RECOMMENDED
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </form>
   );
 }
