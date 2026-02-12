@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Frontend",
+			"type": "shell",
+			"command": "cd /d \"c:\\Users\\shiva\\Downloads\\My-Portfolio\\frontend\" && del build.log 2>nul && rmdir /s /q out 2>nul && rmdir /s /q .next 2>nul && npx next build 2>&1 | tee build.log",
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "next-build",
+			"type": "shell",
+			"command": "cd frontend && npx next build",
+			"isBackground": false,
+			"group": "build"
+		}
+	]
+}

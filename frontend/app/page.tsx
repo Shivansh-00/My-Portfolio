@@ -1,4 +1,3 @@
-import { api } from "@/lib/api";
 import HeroSection from "@/components/hero-section";
 import StatsSection from "@/components/stats-section";
 import SkillsSection from "@/components/skills-section";
@@ -8,39 +7,19 @@ import ContactSection from "@/components/contact-section";
 import CyberGame from "@/components/cyber-game";
 import BreachGateway from "@/components/breach-gateway";
 import GamingShell from "@/components/gaming-shell";
+import {
+  staticProfile,
+  staticSkills,
+  staticExperience,
+  staticProjects,
+  staticGithub,
+  staticLeetcode,
+} from "@/lib/static-data";
 
-export default async function HomePage() {
-  const fallbackProfile = {
-    name: "Shivansh Srivastava",
-    role: "AI Engineer | Full-Stack Developer | AIR 15 SRMJEEE",
-    email: "shivanshsrivastava495@gmail.com",
-    linkedin: "https://www.linkedin.com/in/shivansh-srivastava-3a2a161b5/",
-    github: "https://github.com/Shivansh-00",
-    leetcode: "https://leetcode.com/u/YjPHT2lSCY/"
-  };
-
-  const [profile, skills, experience, projects, github, leetcode] =
-    await Promise.all([
-      api.profile().catch(() => fallbackProfile),
-      api.skills().catch(() => []),
-      api.experience().catch(() => []),
-      api.projects().catch(() => []),
-      api.github().catch(() => ({
-        topRepos: [],
-        languages: [],
-        recentCommits: 0
-      })),
-      api.leetcode().catch(() => ({
-        totalSolved: 0,
-        easy: 0,
-        medium: 0,
-        hard: 0
-      }))
-    ]);
-
+export default function HomePage() {
   return (
     <GamingShell>
-      <HeroSection profile={profile} />
+      <HeroSection profile={staticProfile} />
 
       {/* Divider */}
       <div className="relative py-4 lg:pl-20">
@@ -49,7 +28,7 @@ export default async function HomePage() {
         </div>
       </div>
 
-      <StatsSection github={github} leetcode={leetcode} />
+      <StatsSection github={staticGithub} leetcode={staticLeetcode} />
 
       <div className="relative py-4 lg:pl-20">
         <div className="max-w-6xl mx-auto px-4">
@@ -57,7 +36,7 @@ export default async function HomePage() {
         </div>
       </div>
 
-      <SkillsSection skills={skills} />
+      <SkillsSection skills={staticSkills} />
 
       <div className="relative py-4 lg:pl-20">
         <div className="max-w-6xl mx-auto px-4">
@@ -65,7 +44,7 @@ export default async function HomePage() {
         </div>
       </div>
 
-      <ExperienceSection experience={experience} />
+      <ExperienceSection experience={staticExperience} />
 
       <div className="relative py-4 lg:pl-20">
         <div className="max-w-6xl mx-auto px-4">
@@ -74,7 +53,7 @@ export default async function HomePage() {
       </div>
 
       <BreachGateway>
-        <ProjectsSection projects={projects} />
+        <ProjectsSection projects={staticProjects} />
       </BreachGateway>
 
       <div className="relative py-4 lg:pl-20">
@@ -91,7 +70,7 @@ export default async function HomePage() {
         </div>
       </div>
 
-      <ContactSection profile={profile} />
+      <ContactSection profile={staticProfile} />
     </GamingShell>
   );
 }

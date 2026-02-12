@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Frontend Static",
+			"type": "shell",
+			"command": "npx next build",
+			"isBackground": false,
+			"group": "build"
+		}
+	]
+}

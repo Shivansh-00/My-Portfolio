@@ -16,7 +16,6 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
       "Content-Type": "application/json",
       ...(init?.headers ?? {})
     },
-    next: { revalidate: 60 }
   });
 
   if (!response.ok) {
