@@ -1,0 +1,739 @@
+"use client";
+
+import { useRef, useMemo, useEffect } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import * as THREE from "three";
+
+/* ══════════════════════════════════════════════════════════════
+   J.A.R.V.I.S.  —  Three.js Holographic AI Interface
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── COLOUR PALETTE (JARVIS blue-white-gold) ── */
+const JARVIS_BLUE   = "#00b4d8";
+const JARVIS_CYAN   = "#00f0ff";
+const JARVIS_GOLD   = "#f0c040";
+const JARVIS_WHITE  = "#c8e6ff";
+const JARVIS_DIM    = "#0a3d5c";
+
+/* ══════════════════════════════════════════════════════════════
+   ARC REACTOR CORE — concentric glowing rings + central pulse
+   ══════════════════════════════════════════════════════════════ */
+
+const arcCoreVS = `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const arcCoreFS = `
+  uniform float uTime;
+  varying vec2 vUv;
+
+  void main() {
+    vec2 c = vUv * 2.0 - 1.0;
+    float r = length(c);
+    float angle = atan(c.y, c.x);
+
+    // Central glow
+    float core = exp(-r * 8.0) * 1.2;
+
+    // Concentric rings with segment gaps
+    float ring1 = smoothstep(0.005, 0.0, abs(r - 0.15)) * 0.9;
+    float ring2 = smoothstep(0.004, 0.0, abs(r - 0.28)) * 0.7;
+    float ring3 = smoothstep(0.003, 0.0, abs(r - 0.42)) * 0.5;
+    float ring4 = smoothstep(0.002, 0.0, abs(r - 0.58)) * 0.35;
+    float ring5 = smoothstep(0.0015, 0.0, abs(r - 0.75)) * 0.2;
+
+    // Segmented gaps — rotating at different speeds
+    float seg1 = step(0.3, fract((angle + uTime * 0.5) / 6.2831 * 8.0));
+    float seg2 = step(0.25, fract((angle - uTime * 0.3) / 6.2831 * 12.0));
+    float seg3 = step(0.2, fract((angle + uTime * 0.2) / 6.2831 * 16.0));
+
+    ring2 *= seg1;
+    ring3 *= seg2;
+    ring4 *= seg3;
+
+    // Pulse wave expanding outward
+    float pulse = smoothstep(0.02, 0.0, abs(r - fract(uTime * 0.4) * 0.9)) * 0.4;
+
+    // Tick marks on outer ring
+    float ticks = smoothstep(0.55, 0.58, r) * smoothstep(0.62, 0.59, r);
+    float tickPattern = step(0.9, fract(angle / 6.2831 * 36.0 + uTime * 0.1));
+    ticks *= tickPattern * 0.4;
+
+    float total = core + ring1 + ring2 + ring3 + ring4 + ring5 + pulse + ticks;
+
+    // JARVIS blue + white core
+    vec3 col = mix(vec3(0.0, 0.71, 0.85), vec3(0.78, 0.9, 1.0), core * 0.8);
+    col += vec3(0.94, 0.75, 0.25) * pulse * 0.3; // gold pulse accent
+
+    float alpha = total * smoothstep(0.9, 0.5, r);
+    gl_FragColor = vec4(col, alpha * 0.85);
+  }
+`;
+
+function ArcReactorCore() {
+  const matRef = useRef<THREE.ShaderMaterial>(null!);
+  useFrame((s) => {
+    if (matRef.current) matRef.current.uniforms.uTime.value = s.clock.elapsedTime;
+  });
+  return (
+    <mesh position={[0, 0, -5]}>
+      <planeGeometry args={[14, 14]} />
+      <shaderMaterial
+        ref={matRef}
+        vertexShader={arcCoreVS}
+        fragmentShader={arcCoreFS}
+        uniforms={{ uTime: { value: 0 } }}
+        transparent
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+      />
+    </mesh>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HOLOGRAPHIC HUD RINGS — multi-speed segmented torus wireframes
+   ══════════════════════════════════════════════════════════════ */
+
+function HUDRing({
+  radius = 5,
+  speed = 0.1,
+  color = JARVIS_CYAN,
+  tilt = 0,
+  tubeRadius = 0.01,
+  opacity = 0.15,
+  segments = 128,
+}: {
+  radius?: number;
+  speed?: number;
+  color?: string;
+  tilt?: number;
+  tubeRadius?: number;
+  opacity?: number;
+  segments?: number;
+}) {
+  const ref = useRef<THREE.Mesh>(null!);
+  useFrame((s, dt) => {
+    if (!ref.current) return;
+    ref.current.rotation.y += dt * speed;
+    ref.current.rotation.z += dt * speed * 0.08;
+    // Gentle breathing
+    ref.current.rotation.x = tilt + Math.sin(s.clock.elapsedTime * 0.25) * 0.04;
+  });
+  return (
+    <mesh ref={ref}>
+      <torusGeometry args={[radius, tubeRadius, 8, segments]} />
+      <meshBasicMaterial
+        color={color}
+        transparent
+        opacity={opacity}
+        wireframe
+        blending={THREE.AdditiveBlending}
+      />
+    </mesh>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   WIREFRAME GLOBE — JARVIS signature rotating earth sphere
+   ══════════════════════════════════════════════════════════════ */
+
+function WireframeGlobe() {
+  const groupRef = useRef<THREE.Group>(null!);
+  const innerRef = useRef<THREE.Mesh>(null!);
+
+  useFrame((s, dt) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += dt * 0.06;
+    }
+    if (innerRef.current) {
+      innerRef.current.rotation.y -= dt * 0.03;
+      innerRef.current.rotation.x += dt * 0.01;
+    }
+  });
+
+  return (
+    <group ref={groupRef} position={[0, 0, -3]}>
+      {/* Outer wireframe sphere */}
+      <mesh>
+        <sphereGeometry args={[6.5, 32, 24]} />
+        <meshBasicMaterial
+          color={JARVIS_BLUE}
+          wireframe
+          transparent
+          opacity={0.06}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+      {/* Inner counter-rotating sphere */}
+      <mesh ref={innerRef}>
+        <sphereGeometry args={[5.8, 24, 18]} />
+        <meshBasicMaterial
+          color={JARVIS_CYAN}
+          wireframe
+          transparent
+          opacity={0.04}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+      {/* Latitude highlight rings */}
+      {[2.0, 4.0, -2.0, -4.0].map((y, i) => {
+        const r = Math.sqrt(6.5 * 6.5 - y * y);
+        return (
+          <mesh key={i} position={[0, y, 0]} rotation={[Math.PI / 2, 0, 0]}>
+            <ringGeometry args={[r - 0.02, r + 0.02, 64]} />
+            <meshBasicMaterial
+              color={JARVIS_CYAN}
+              transparent
+              opacity={0.1}
+              blending={THREE.AdditiveBlending}
+              side={THREE.DoubleSide}
+            />
+          </mesh>
+        );
+      })}
+    </group>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DATA STREAM PARTICLES — directional flowing data points
+   ══════════════════════════════════════════════════════════════ */
+
+const DATA_PARTICLE_COUNT = 600;
+
+const dataParticleVS = `
+  attribute float aSize;
+  attribute float aSpeed;
+  attribute float aPhase;
+  uniform float uTime;
+  varying float vAlpha;
+  varying float vType;
+
+  void main() {
+    vec3 pos = position;
+
+    // Spiral upward flow
+    float t = mod(uTime * aSpeed + aPhase, 6.2831);
+    pos.y += sin(t) * 3.0 + uTime * aSpeed * 0.5;
+    pos.y = mod(pos.y + 30.0, 60.0) - 30.0;
+
+    // Gentle orbital sway
+    pos.x += sin(uTime * 0.2 + aPhase * 2.0) * 1.5;
+    pos.z += cos(uTime * 0.15 + aPhase * 1.5) * 1.0;
+
+    vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+    float dist = length(mv.xyz);
+    gl_PointSize = aSize * (120.0 / dist);
+    gl_Position = projectionMatrix * mv;
+
+    vAlpha = smoothstep(60.0, 8.0, dist) * (0.4 + 0.3 * sin(uTime * 1.5 + aPhase));
+    vType = aPhase;
+  }
+`;
+
+const dataParticleFS = `
+  varying float vAlpha;
+  varying float vType;
+
+  void main() {
+    float d = length(gl_PointCoord - 0.5) * 2.0;
+    if (d > 1.0) discard;
+    float a = smoothstep(1.0, 0.15, d) * vAlpha * 0.6;
+
+    // Mix blue and gold data points
+    vec3 blueCol = vec3(0.0, 0.71, 0.85);
+    vec3 goldCol = vec3(0.94, 0.75, 0.25);
+    vec3 col = mix(blueCol, goldCol, step(0.85, fract(vType * 3.7)));
+
+    gl_FragColor = vec4(col, a);
+  }
+`;
+
+function DataStreamParticles() {
+  const matRef = useRef<THREE.ShaderMaterial>(null!);
+
+  const { positions, sizes, speeds, phases } = useMemo(() => {
+    const pos = new Float32Array(DATA_PARTICLE_COUNT * 3);
+    const sz = new Float32Array(DATA_PARTICLE_COUNT);
+    const sp = new Float32Array(DATA_PARTICLE_COUNT);
+    const ph = new Float32Array(DATA_PARTICLE_COUNT);
+
+    for (let i = 0; i < DATA_PARTICLE_COUNT; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const r = 4 + Math.random() * 30;
+      pos[i * 3] = Math.cos(theta) * r;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 60;
+      pos[i * 3 + 2] = Math.sin(theta) * r - 5;
+      sz[i] = 0.6 + Math.random() * 2.0;
+      sp[i] = 0.2 + Math.random() * 0.6;
+      ph[i] = Math.random() * Math.PI * 2;
+    }
+    return { positions: pos, sizes: sz, speeds: sp, phases: ph };
+  }, []);
+
+  useFrame((s) => {
+    if (matRef.current) matRef.current.uniforms.uTime.value = s.clock.elapsedTime;
+  });
+
+  return (
+    <points>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} count={DATA_PARTICLE_COUNT} />
+        <bufferAttribute attach="attributes-aSize" args={[sizes, 1]} count={DATA_PARTICLE_COUNT} />
+        <bufferAttribute attach="attributes-aSpeed" args={[speeds, 1]} count={DATA_PARTICLE_COUNT} />
+        <bufferAttribute attach="attributes-aPhase" args={[phases, 1]} count={DATA_PARTICLE_COUNT} />
+      </bufferGeometry>
+      <shaderMaterial
+        ref={matRef}
+        vertexShader={dataParticleVS}
+        fragmentShader={dataParticleFS}
+        uniforms={{ uTime: { value: 0 } }}
+        transparent
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+      />
+    </points>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RADAR SWEEP — rotating scan-line effect on a disc
+   ══════════════════════════════════════════════════════════════ */
+
+const radarVS = `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`;
+
+const radarFS = `
+  uniform float uTime;
+  varying vec2 vUv;
+
+  void main() {
+    vec2 c = vUv * 2.0 - 1.0;
+    float r = length(c);
+    float angle = atan(c.y, c.x);
+
+    // Sweep line
+    float sweep = mod(uTime * 0.8, 6.2831);
+    float diff = mod(angle - sweep + 6.2831, 6.2831);
+    float trail = smoothstep(1.2, 0.0, diff) * smoothstep(0.0, 0.02, diff);
+
+    // Concentric range circles
+    float circles = 0.0;
+    circles += smoothstep(0.003, 0.0, abs(r - 0.25)) * 0.3;
+    circles += smoothstep(0.003, 0.0, abs(r - 0.5)) * 0.25;
+    circles += smoothstep(0.003, 0.0, abs(r - 0.75)) * 0.2;
+
+    // Cross-hairs
+    float ch = smoothstep(0.003, 0.0, abs(c.x)) * 0.1 + smoothstep(0.003, 0.0, abs(c.y)) * 0.1;
+
+    float mask = smoothstep(0.95, 0.9, r);
+    float outerRing = smoothstep(0.003, 0.0, abs(r - 0.92)) * 0.5;
+
+    float total = (trail * 0.4 + circles + ch + outerRing) * mask;
+
+    // Blip targets
+    float blip1 = smoothstep(0.03, 0.0, length(c - vec2(0.3, 0.4))) * trail * 2.0;
+    float blip2 = smoothstep(0.025, 0.0, length(c - vec2(-0.5, -0.2))) * trail * 1.5;
+    float blip3 = smoothstep(0.02, 0.0, length(c - vec2(0.15, -0.6))) * trail * 1.8;
+    total += blip1 + blip2 + blip3;
+
+    vec3 col = vec3(0.0, 0.85, 1.0) * total;
+    col += vec3(0.94, 0.75, 0.25) * (blip1 + blip2 + blip3) * 0.5;
+
+    gl_FragColor = vec4(col, total * 0.7);
+  }
+`;
+
+function RadarSweep() {
+  const matRef = useRef<THREE.ShaderMaterial>(null!);
+  useFrame((s) => {
+    if (matRef.current) matRef.current.uniforms.uTime.value = s.clock.elapsedTime;
+  });
+  return (
+    <mesh position={[12, 6, -8]} rotation={[0.3, -0.4, 0.1]}>
+      <planeGeometry args={[6, 6]} />
+      <shaderMaterial
+        ref={matRef}
+        vertexShader={radarVS}
+        fragmentShader={radarFS}
+        uniforms={{ uTime: { value: 0 } }}
+        transparent
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HOLOGRAPHIC DATA PANELS — floating UI elements
+   ══════════════════════════════════════════════════════════════ */
+
+const panelVS = `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`;
+
+const panelFS = `
+  uniform float uTime;
+  uniform float uSeed;
+  varying vec2 vUv;
+
+  float hash(float n) { return fract(sin(n) * 43758.5453); }
+
+  void main() {
+    vec2 uv = vUv;
+
+    // Border frame
+    float border = 0.0;
+    border += step(uv.x, 0.02) + step(1.0 - 0.02, uv.x);
+    border += step(uv.y, 0.04) + step(1.0 - 0.04, uv.y);
+    border = min(border, 1.0) * 0.6;
+
+    // Scanning bar
+    float scanY = fract(uTime * 0.3 + uSeed);
+    float scan = smoothstep(0.02, 0.0, abs(uv.y - scanY)) * 0.4;
+
+    // Data lines
+    float lines = 0.0;
+    for (float i = 0.0; i < 5.0; i++) {
+      float y = 0.15 + i * 0.16;
+      float w = hash(uSeed + i) * 0.6 + 0.2; // random width
+      float on = step(0.3, hash(uSeed + i + floor(uTime * 2.0))); // blink
+      lines += smoothstep(0.006, 0.0, abs(uv.y - y)) * step(0.08, uv.x) * step(uv.x, 0.08 + w) * on * 0.3;
+    }
+
+    // Header bar
+    float header = step(0.88, uv.y) * 0.15;
+
+    // Corner accents
+    float corners = 0.0;
+    corners += step(length(uv - vec2(0.0, 0.0)), 0.06) * 0.3;
+    corners += step(length(uv - vec2(1.0, 0.0)), 0.06) * 0.3;
+    corners += step(length(uv - vec2(0.0, 1.0)), 0.06) * 0.3;
+    corners += step(length(uv - vec2(1.0, 1.0)), 0.06) * 0.3;
+
+    // Fill
+    float fill = 0.02;
+
+    float total = border + scan + lines + header + corners + fill;
+    vec3 col = vec3(0.0, 0.85, 1.0);
+    gl_FragColor = vec4(col, total * 0.65);
+  }
+`;
+
+interface PanelData {
+  pos: [number, number, number];
+  rot: [number, number, number];
+  size: [number, number];
+  seed: number;
+}
+
+function HoloPanel({ pos, rot, size, seed }: PanelData) {
+  const matRef = useRef<THREE.ShaderMaterial>(null!);
+  const meshRef = useRef<THREE.Mesh>(null!);
+
+  useFrame((s) => {
+    if (matRef.current) matRef.current.uniforms.uTime.value = s.clock.elapsedTime;
+    if (meshRef.current) {
+      meshRef.current.position.y = pos[1] + Math.sin(s.clock.elapsedTime * 0.3 + seed) * 0.2;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} position={pos} rotation={rot}>
+      <planeGeometry args={size} />
+      <shaderMaterial
+        ref={matRef}
+        vertexShader={panelVS}
+        fragmentShader={panelFS}
+        uniforms={{ uTime: { value: 0 }, uSeed: { value: seed } }}
+        transparent
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TECH GRID FLOOR — JARVIS-style digital interface grid
+   ══════════════════════════════════════════════════════════════ */
+
+const techGridVS = `varying vec2 vUv; varying vec3 vWP; void main(){ vUv=uv; vec4 w=modelMatrix*vec4(position,1.0); vWP=w.xyz; gl_Position=projectionMatrix*viewMatrix*w; }`;
+
+const techGridFS = `
+  uniform float uTime;
+  varying vec2 vUv;
+  varying vec3 vWP;
+
+  void main() {
+    vec2 c = vUv * 50.0;
+    vec2 g = abs(fract(c) - 0.5);
+    float line = min(g.x, g.y);
+    float grid = 1.0 - smoothstep(0.0, 0.03, line);
+
+    // Major grid lines every 5 cells
+    vec2 c5 = vUv * 10.0;
+    vec2 g5 = abs(fract(c5) - 0.5);
+    float majorLine = min(g5.x, g5.y);
+    float majorGrid = 1.0 - smoothstep(0.0, 0.02, majorLine);
+
+    // Distance fade
+    float dist = smoothstep(50.0, 5.0, length(vWP.xz));
+    float horizon = (1.0 - vUv.y) * 0.9;
+
+    // Pulse wave
+    float dc = length(vWP.xz);
+    float pulse = smoothstep(2.0, 0.0, abs(dc - mod(uTime * 5.0, 50.0))) * 0.35;
+
+    // Node intersections glow
+    float nodeX = smoothstep(0.48, 0.5, fract(c5.x)) * smoothstep(0.52, 0.5, fract(c5.x));
+    float nodeY = smoothstep(0.48, 0.5, fract(c5.y)) * smoothstep(0.52, 0.5, fract(c5.y));
+    float nodes = nodeX * nodeY * (sin(uTime * 2.0 + vWP.x * 0.3 + vWP.z * 0.5) * 0.5 + 0.5) * 0.5;
+
+    float alpha = (grid * 0.08 + majorGrid * 0.15 + pulse + nodes) * dist * horizon;
+
+    vec3 col = vec3(0.0, 0.71, 0.85);
+    col += vec3(0.0, 0.2, 0.3) * pulse;
+
+    gl_FragColor = vec4(col, alpha);
+  }
+`;
+
+function TechGrid() {
+  const matRef = useRef<THREE.ShaderMaterial>(null!);
+  useFrame((s) => {
+    if (matRef.current) matRef.current.uniforms.uTime.value = s.clock.elapsedTime;
+  });
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -10, 0]}>
+      <planeGeometry args={[100, 60]} />
+      <shaderMaterial
+        ref={matRef}
+        vertexShader={techGridVS}
+        fragmentShader={techGridFS}
+        uniforms={{ uTime: { value: 0 } }}
+        transparent
+        side={THREE.DoubleSide}
+        depthWrite={false}
+      />
+    </mesh>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CIRCUIT LINES — connected data-flow line segments
+   ══════════════════════════════════════════════════════════════ */
+
+function CircuitLine({
+  points,
+  color = JARVIS_CYAN,
+  speed = 0.8,
+}: {
+  points: [number, number, number][];
+  color?: string;
+  speed?: number;
+}) {
+  const matRef = useRef<THREE.ShaderMaterial>(null!);
+
+  const curve = useMemo(() => {
+    const vecs = points.map((p) => new THREE.Vector3(...p));
+    return new THREE.CatmullRomCurve3(vecs, false, "chordal");
+  }, [points]);
+
+  useFrame((s) => {
+    if (matRef.current) matRef.current.uniforms.uTime.value = s.clock.elapsedTime;
+  });
+
+  return (
+    <mesh>
+      <tubeGeometry args={[curve, 64, 0.015, 4, false]} />
+      <shaderMaterial
+        ref={matRef}
+        vertexShader="varying float vP; void main(){ vP = uv.x; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }"
+        fragmentShader={`
+          uniform float uTime;
+          uniform vec3 uColor;
+          uniform float uSpeed;
+          varying float vP;
+          void main() {
+            float tr = fract(uTime * uSpeed * 0.25);
+            float beam = smoothstep(0.0, 0.08, vP - tr + 0.12) * smoothstep(0.2, 0.08, vP - tr);
+            float glow = exp(-abs(vP - tr) * 10.0) * 0.25;
+            float baseLine = 0.03;
+            float a = (beam + glow + baseLine) * 0.6;
+            gl_FragColor = vec4(uColor, a);
+          }
+        `}
+        uniforms={{
+          uTime: { value: 0 },
+          uColor: { value: new THREE.Color(color) },
+          uSpeed: { value: speed },
+        }}
+        transparent
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PARALLAX CAMERA — smooth mouse-reactive depth
+   ══════════════════════════════════════════════════════════════ */
+
+function ParallaxCamera() {
+  const { camera } = useThree();
+  const mouse = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const h = (e: MouseEvent) => {
+      mouse.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouse.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    window.addEventListener("mousemove", h, { passive: true });
+    return () => window.removeEventListener("mousemove", h);
+  }, []);
+
+  useFrame(() => {
+    camera.position.x += (mouse.current.x * 1.2 - camera.position.x) * 0.012;
+    camera.position.y += (-mouse.current.y * 0.6 - camera.position.y) * 0.012;
+    camera.lookAt(0, 0, 0);
+  });
+
+  return null;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MAIN SCENE — J.A.R.V.I.S. Composition
+   ══════════════════════════════════════════════════════════════ */
+
+function Scene() {
+  const panels = useMemo<PanelData[]>(
+    () => [
+      { pos: [-13, 4, -6], rot: [0, 0.3, 0], size: [3.5, 2.2], seed: 1.0 },
+      { pos: [-11, -2, -7], rot: [0, 0.2, 0.05], size: [3, 1.8], seed: 2.3 },
+      { pos: [13, 3, -6], rot: [0, -0.3, 0], size: [3.2, 2.0], seed: 3.7 },
+      { pos: [11, -3, -7], rot: [0, -0.2, -0.03], size: [2.8, 1.6], seed: 4.1 },
+      { pos: [-14, -6, -8], rot: [0, 0.15, 0.08], size: [2.5, 1.5], seed: 5.5 },
+      { pos: [14, -6, -8], rot: [0, -0.15, -0.08], size: [2.5, 1.5], seed: 6.2 },
+    ],
+    []
+  );
+
+  const circuits = useMemo(
+    () => [
+      { pts: [[-20, -5, -10], [-12, -3, -6], [-6, 0, -4], [0, 2, -3]] as [number, number, number][], c: JARVIS_CYAN, s: 1.0 },
+      { pts: [[20, -4, -10], [12, -1, -6], [6, 1, -4], [0, 0, -3]] as [number, number, number][], c: JARVIS_BLUE, s: 0.7 },
+      { pts: [[-15, 8, -12], [-8, 5, -7], [0, 3, -5], [8, 6, -7]] as [number, number, number][], c: JARVIS_GOLD, s: 1.3 },
+      { pts: [[0, -8, -10], [-5, -5, -6], [-10, -2, -8], [-18, 2, -12]] as [number, number, number][], c: JARVIS_CYAN, s: 0.5 },
+      { pts: [[0, -8, -10], [5, -5, -6], [10, -2, -8], [18, 2, -12]] as [number, number, number][], c: JARVIS_DIM, s: 0.9 },
+    ],
+    []
+  );
+
+  return (
+    <>
+      <ParallaxCamera />
+
+      {/* Core reactor */}
+      <ArcReactorCore />
+
+      {/* Wireframe globe */}
+      <WireframeGlobe />
+
+      {/* HUD rings — layered at different tilts */}
+      <HUDRing radius={8} speed={0.06} color={JARVIS_CYAN} tilt={0.2} opacity={0.12} />
+      <HUDRing radius={10} speed={-0.04} color={JARVIS_BLUE} tilt={-0.15} opacity={0.08} />
+      <HUDRing radius={12.5} speed={0.03} color={JARVIS_CYAN} tilt={0.4} opacity={0.06} />
+      <HUDRing radius={15} speed={-0.02} color={JARVIS_WHITE} tilt={-0.1} opacity={0.04} tubeRadius={0.008} />
+      <HUDRing radius={18} speed={0.015} color={JARVIS_DIM} tilt={0.05} opacity={0.03} tubeRadius={0.006} />
+
+      {/* Radar mini-display */}
+      <RadarSweep />
+
+      {/* Data stream particles */}
+      <DataStreamParticles />
+
+      {/* Floating holo panels */}
+      {panels.map((p, i) => (
+        <HoloPanel key={i} {...p} />
+      ))}
+
+      {/* Circuit data-flow lines */}
+      {circuits.map((c, i) => (
+        <CircuitLine key={i} points={c.pts} color={c.c} speed={c.s} />
+      ))}
+
+      {/* Tech grid floor */}
+      <TechGrid />
+
+      {/* Lighting — cool blue ambient with accent points */}
+      <ambientLight intensity={0.06} color="#c8e6ff" />
+      <pointLight position={[0, 0, 5]} intensity={0.5} color={JARVIS_CYAN} distance={30} decay={2} />
+      <pointLight position={[-10, 8, -5]} intensity={0.25} color={JARVIS_BLUE} distance={40} decay={2} />
+      <pointLight position={[10, -5, -5]} intensity={0.15} color={JARVIS_GOLD} distance={30} decay={2} />
+    </>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EXPORT — J.A.R.V.I.S. holographic display
+   ══════════════════════════════════════════════════════════════ */
+
+export default function ThreeBackground() {
+  return (
+    <div className="fixed inset-0 -z-10">
+      <Canvas
+        camera={{ position: [0, 0, 18], fov: 55, near: 0.1, far: 200 }}
+        dpr={[1, 1.5]}
+        gl={{
+          antialias: false,
+          alpha: true,
+          powerPreference: "high-performance",
+          stencil: false,
+          depth: true,
+        }}
+        style={{ background: "transparent" }}
+        performance={{ min: 0.5 }}
+        flat
+      >
+        <Scene />
+      </Canvas>
+
+      {/* CSS Bloom/Glow layer */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          mixBlendMode: "screen",
+          filter: "blur(6px) brightness(0.35)",
+          opacity: 0.5,
+          background: "transparent",
+        }}
+      />
+
+      {/* Vignette overlay */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, transparent 35%, rgba(0,8,16,0.7) 100%)",
+        }}
+      />
+
+      {/* JARVIS-style blue tint in corners */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(0,180,216,0.12) 0%, transparent 25%, transparent 75%, rgba(0,180,216,0.08) 100%)",
+        }}
+      />
+    </div>
+  );
+}

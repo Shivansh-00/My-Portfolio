@@ -5,36 +5,49 @@ import { useAudio } from "@/components/audio-provider";
 import type { SoundName } from "@/lib/audio-engine";
 
 /**
- * Hook for adding gaming sound effects to UI elements.
- * Returns event handlers you can spread onto any element.
+ * Professional SFX hook with throttled events, haptic feedback,
+ * and convenient event handler spreads.
  *
  * Usage:
  *   const sfx = useSfx();
- *   <button {...sfx.hover} onClick={() => { sfx.play("click"); doStuff(); }}>
+ *   <button {...sfx.hover} onClick={() => { sfx.play("click"); }}>
+ *   <NavLink {...sfx.hover} onClick={() => sfx.play("navigate")}>
  */
 export function useSfx() {
   const { playSfx } = useAudio();
   const lastHover = useRef(0);
+  const lastClick = useRef(0);
 
   const play = useCallback(
-    (name: SoundName) => playSfx(name),
+    (name: SoundName) => {
+      playSfx(name);
+      // Haptic feedback for mobile (very short vibration)
+      if ("vibrate" in navigator) {
+        try { navigator.vibrate(8); } catch {}
+      }
+    },
     [playSfx]
   );
 
-  // Throttled hover sound (max once per 80ms to avoid spam)
+  // Throttled hover (max once per 70ms)
   const hover = {
     onMouseEnter: useCallback(() => {
       const now = Date.now();
-      if (now - lastHover.current > 80) {
+      if (now - lastHover.current > 70) {
         playSfx("hover");
         lastHover.current = now;
       }
     }, [playSfx]),
   };
 
+  // Throttled click sound (max once per 50ms to prevent double)
   const click = {
     onMouseDown: useCallback(() => {
-      playSfx("click");
+      const now = Date.now();
+      if (now - lastClick.current > 50) {
+        playSfx("click");
+        lastClick.current = now;
+      }
     }, [playSfx]),
   };
 

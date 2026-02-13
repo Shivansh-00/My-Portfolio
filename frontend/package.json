@@ -12,7 +12,6 @@
     "@hookform/resolvers": "^3.3.4",
     "@react-three/drei": "^9.88.0",
     "@react-three/fiber": "^8.15.0",
-    "@react-three/postprocessing": "^2.15.0",
     "clsx": "^2.1.1",
     "emailjs-com": "^3.2.0",
     "framer-motion": "^11.0.0",

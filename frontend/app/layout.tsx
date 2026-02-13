@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "AI Engineer & Full-Stack Developer — An immersive gaming-style portfolio built with Next.js and Three.js.",
   keywords: [
-    "Shivansh Srivastava",
+    "Shivansh Srivastava", 
     "portfolio",
     "AI Engineer",
     "Full-Stack Developer",

@@ -4,6 +4,7 @@ import type { Profile } from "@/types/api";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import ContactForm from "@/components/contact-form";
+import { headingReveal, fadeInLeft, fadeInRight, staggerContainer, staggerItem } from "@/lib/animations";
 
 export default function ContactSection({ profile }: { profile: Profile }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -12,125 +13,71 @@ export default function ContactSection({ profile }: { profile: Profile }) {
     <section id="contact" ref={ref} className="gaming-section py-20 lg:pl-20">
       <div className="max-w-4xl mx-auto px-4">
         <motion.h2
-          initial={{ opacity: 0, x: -30 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          variants={headingReveal} initial="hidden" animate={inView ? "visible" : "hidden"}
           className="section-heading mb-4"
-        >
-          Open Comms
-        </motion.h2>
+        >Web Signal</motion.h2>
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
+          initial={{ opacity: 0, x: -20 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="font-mono text-xs text-slate-500 mb-12"
-        >
-          {">"} COMMS_CHANNEL.open() — READY TO RECEIVE TRANSMISSIONS
-        </motion.p>
+        >{">"}  WEB_SIGNAL.open() — READY TO RECEIVE TRANSMISSIONS</motion.p>
 
         <div className="grid gap-8 md:grid-cols-5">
           {/* Contact Info Panel */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            variants={fadeInLeft} initial="hidden" animate={inView ? "visible" : "hidden"}
+            transition={{ delay: 0.3 }}
             className="md:col-span-2"
           >
-            <div className="gaming-card h-full">
+            <div className="gaming-card h-full neon-pulse-border">
               <div className="hud-corner hud-corner-tl" />
               <div className="hud-corner hud-corner-br" />
 
-              <h3 className="font-gaming text-sm uppercase tracking-widest neon-text-cyan mb-6">
-                Direct Links
-              </h3>
+              <h3 className="font-gaming text-sm uppercase tracking-widest neon-text-cyan mb-6">Direct Links</h3>
 
-              <div className="space-y-5">
-                <a
-                  href={`mailto:${profile.email}`}
-                  className="flex items-center gap-3 group"
-                >
-                  <div className="w-8 h-8 border border-gaming-border flex items-center justify-center
-                               group-hover:border-neon-cyan/60 transition-all duration-300">
-                    <span className="text-sm">✉</span>
-                  </div>
-                  <div>
-                    <p className="font-mono text-[10px] text-slate-600 uppercase">
-                      Email
-                    </p>
-                    <p className="font-body text-sm text-slate-400 group-hover:text-neon-cyan transition-colors">
-                      {profile.email}
-                    </p>
-                  </div>
-                </a>
+              <motion.div
+                className="space-y-5"
+                variants={staggerContainer(0.1, 0.5)}
+                initial="hidden" animate={inView ? "visible" : "hidden"}
+              >
+                {[
+                  { href: `mailto:${profile.email}`, icon: "✉", label: "Email", text: profile.email, color: "neon-cyan" },
+                  { href: profile.github, icon: "⬡", label: "GitHub", text: "Shivansh-00", color: "neon-cyan" },
+                  { href: profile.linkedin, icon: "◆", label: "LinkedIn", text: "Shivansh Srivastava", color: "neon-magenta" },
+                  { href: profile.leetcode, icon: "◈", label: "LeetCode", text: "Profile", color: "neon-green" },
+                ].map((link) => (
+                  <motion.a
+                    key={link.label}
+                    href={link.href}
+                    target={link.href.startsWith("mailto") ? undefined : "_blank"}
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 group"
+                    variants={staggerItem}
+                    whileHover={{ x: 6 }}
+                  >
+                    <motion.div
+                      className={`w-8 h-8 border border-gaming-border flex items-center justify-center group-hover:border-${link.color}/60 transition-all duration-300`}
+                      whileHover={{ rotate: 90, scale: 1.1 }}
+                    >
+                      <span className="text-sm">{link.icon}</span>
+                    </motion.div>
+                    <div>
+                      <p className="font-mono text-[10px] text-slate-600 uppercase">{link.label}</p>
+                      <p className={`font-body text-sm text-slate-400 group-hover:text-${link.color} transition-colors`}>{link.text}</p>
+                    </div>
+                  </motion.a>
+                ))}
+              </motion.div>
 
-                <a
-                  href={profile.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 group"
-                >
-                  <div className="w-8 h-8 border border-gaming-border flex items-center justify-center
-                               group-hover:border-neon-cyan/60 transition-all duration-300">
-                    <span className="text-sm">⬡</span>
-                  </div>
-                  <div>
-                    <p className="font-mono text-[10px] text-slate-600 uppercase">
-                      GitHub
-                    </p>
-                    <p className="font-body text-sm text-slate-400 group-hover:text-neon-cyan transition-colors">
-                      Shivansh-00
-                    </p>
-                  </div>
-                </a>
-
-                <a
-                  href={profile.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 group"
-                >
-                  <div className="w-8 h-8 border border-gaming-border flex items-center justify-center
-                               group-hover:border-neon-magenta/60 transition-all duration-300">
-                    <span className="text-sm">◆</span>
-                  </div>
-                  <div>
-                    <p className="font-mono text-[10px] text-slate-600 uppercase">
-                      LinkedIn
-                    </p>
-                    <p className="font-body text-sm text-slate-400 group-hover:text-neon-magenta transition-colors">
-                      Shivansh Srivastava
-                    </p>
-                  </div>
-                </a>
-
-                <a
-                  href={profile.leetcode}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 group"
-                >
-                  <div className="w-8 h-8 border border-gaming-border flex items-center justify-center
-                               group-hover:border-neon-green/60 transition-all duration-300">
-                    <span className="text-sm">◈</span>
-                  </div>
-                  <div>
-                    <p className="font-mono text-[10px] text-slate-600 uppercase">
-                      LeetCode
-                    </p>
-                    <p className="font-body text-sm text-slate-400 group-hover:text-neon-green transition-colors">
-                      Profile
-                    </p>
-                  </div>
-                </a>
-              </div>
-
-              {/* Decorative status */}
               <div className="mt-8 pt-4 border-t border-gaming-border">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-neon-green rounded-full animate-pulse" />
-                  <span className="font-mono text-[10px] text-slate-600">
-                    COMMS_STATUS: ONLINE
-                  </span>
+                  <motion.span
+                    className="w-2 h-2 bg-neon-green rounded-full"
+                    animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                  <span className="font-mono text-[10px] text-slate-600">WEB_STATUS: CONNECTED</span>
                 </div>
               </div>
             </div>
@@ -138,20 +85,16 @@ export default function ContactSection({ profile }: { profile: Profile }) {
 
           {/* Contact form */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            variants={fadeInRight} initial="hidden" animate={inView ? "visible" : "hidden"}
+            transition={{ delay: 0.5 }}
             className="md:col-span-3"
           >
-            <div className="gaming-card">
+            <div className="gaming-card neon-pulse-border">
               <div className="hud-corner hud-corner-tl" />
               <div className="hud-corner hud-corner-tr" />
               <div className="hud-corner hud-corner-bl" />
               <div className="hud-corner hud-corner-br" />
-
-              <h3 className="font-gaming text-sm uppercase tracking-widest neon-text-cyan mb-6">
-                Send Transmission
-              </h3>
+              <h3 className="font-gaming text-sm uppercase tracking-widest neon-text-cyan mb-6">Send Transmission</h3>
               <ContactForm />
             </div>
           </motion.div>

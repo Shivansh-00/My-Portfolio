@@ -1,0 +1,47 @@
+  ▲ Next.js 14.2.4
+  - Environments: .env.local, .env.production, .env
+
+   Creating an optimized production build ...
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../typescript/lib/typescript' in c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build for build dependencies doesn't lead to expected result 'C:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\typescript\lib\typescript.js', but to 'c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\typescript\lib\typescript.js' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ../../../typescript/lib/typescript (expected C:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\typescript\lib\typescript.js)
+<w>  at file dependencies c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\load-jsconfig.js
+<w>  at file c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\load-jsconfig.js
+<w>  at file dependencies c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file dependencies c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at file c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at resolve commonjs c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../typescript/lib/typescript' in c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build for build dependencies doesn't lead to expected result 'C:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\typescript\lib\typescript.js', but to 'c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\typescript\lib\typescript.js' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ../../../typescript/lib/typescript (expected C:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\typescript\lib\typescript.js)
+<w>  at file dependencies c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\load-jsconfig.js
+<w>  at file c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\load-jsconfig.js
+<w>  at file dependencies c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file dependencies c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\handle-externals.js
+<w>  at file c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\handle-externals.js
+<w>  at file dependencies c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at file c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at resolve commonjs c:\Users\shiva\Downloads\My-Portfolio\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    94.7 kB         182 kB
+├ ○ /_not-found                          871 B          88.2 kB
+└ ○ /admin                               819 B          88.1 kB
++ First Load JS shared by all            87.3 kB
+  ├ chunks/23-01728bd2ac9c06f2.js        31.6 kB
+  ├ chunks/fd9d1056-9bb8762900bbf9f7.js  53.6 kB
+  └ other shared chunks (total)          2.02 kB
+
+
+○  (Static)  prerendered as static content
+

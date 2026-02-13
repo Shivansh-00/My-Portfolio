@@ -16,60 +16,58 @@ import {
   staticLeetcode,
 } from "@/lib/static-data";
 
+function SectionDivider({ variant = "cyan" }: { variant?: "cyan" | "magenta" | "green" | "multi" }) {
+  const gradients: Record<string, string> = {
+    cyan: "from-transparent via-neon-cyan/30 to-transparent",
+    magenta: "from-transparent via-neon-magenta/30 to-transparent",
+    green: "from-transparent via-neon-green/30 to-transparent",
+    multi: "",
+  };
+  return (
+    <div className="relative py-6 lg:pl-20">
+      <div className="max-w-6xl mx-auto px-4">
+        {variant === "multi" ? (
+          <div className="cyber-divider" />
+        ) : (
+          <div className="relative">
+            <div className={`h-px bg-gradient-to-r ${gradients[variant]}`} />
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rotate-45 border"
+              style={{
+                borderColor:
+                  variant === "cyan" ? "rgba(0,240,255,0.4)" :
+                  variant === "magenta" ? "rgba(255,0,229,0.4)" :
+                  "rgba(57,255,20,0.4)",
+                boxShadow:
+                  variant === "cyan" ? "0 0 8px rgba(0,240,255,0.3)" :
+                  variant === "magenta" ? "0 0 8px rgba(255,0,229,0.3)" :
+                  "0 0 8px rgba(57,255,20,0.3)",
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function HomePage() {
   return (
     <GamingShell>
       <HeroSection profile={staticProfile} />
-
-      {/* Divider */}
-      <div className="relative py-4 lg:pl-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="h-px bg-gradient-to-r from-transparent via-neon-cyan/20 to-transparent" />
-        </div>
-      </div>
-
+      <SectionDivider variant="cyan" />
       <StatsSection github={staticGithub} leetcode={staticLeetcode} />
-
-      <div className="relative py-4 lg:pl-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="h-px bg-gradient-to-r from-transparent via-neon-magenta/20 to-transparent" />
-        </div>
-      </div>
-
+      <SectionDivider variant="magenta" />
       <SkillsSection skills={staticSkills} />
-
-      <div className="relative py-4 lg:pl-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="h-px bg-gradient-to-r from-transparent via-neon-green/20 to-transparent" />
-        </div>
-      </div>
-
+      <SectionDivider variant="green" />
       <ExperienceSection experience={staticExperience} />
-
-      <div className="relative py-4 lg:pl-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="h-px bg-gradient-to-r from-transparent via-neon-cyan/20 to-transparent" />
-        </div>
-      </div>
-
+      <SectionDivider variant="cyan" />
       <BreachGateway>
         <ProjectsSection projects={staticProjects} />
       </BreachGateway>
-
-      <div className="relative py-4 lg:pl-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="cyber-divider" />
-        </div>
-      </div>
-
+      <SectionDivider variant="multi" />
       <CyberGame />
-
-      <div className="relative py-4 lg:pl-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="h-px bg-gradient-to-r from-transparent via-neon-magenta/20 to-transparent" />
-        </div>
-      </div>
-
+      <SectionDivider variant="magenta" />
       <ContactSection profile={staticProfile} />
     </GamingShell>
   );

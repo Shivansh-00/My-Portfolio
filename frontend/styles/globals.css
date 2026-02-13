@@ -6,17 +6,17 @@
 
 :root {
   color-scheme: dark;
-  --neon-cyan: #00f0ff;
-  --neon-magenta: #ff00e5;
+  --neon-cyan: #DC143C;
+  --neon-magenta: #1E90FF;
   --neon-green: #39ff14;
   --neon-orange: #ff6a00;
-  --gaming-dark: #0a0a0f;
-  --gaming-panel: #111118;
+  --gaming-dark: #060618;
+  --gaming-panel: #0C0C24;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 240, 255, 0.3) transparent;
+  scrollbar-color: rgba(220, 20, 60, 0.3) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -28,12 +28,12 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background: rgba(0, 240, 255, 0.3);
+  background: rgba(220, 20, 60, 0.3);
   border-radius: 3px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 240, 255, 0.6);
+  background: rgba(220, 20, 60, 0.6);
 }
 
 html {
@@ -43,8 +43,8 @@ html {
 body {
   @apply bg-gaming-dark text-slate-100 antialiased font-body;
   background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(0, 240, 255, 0.03) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(255, 0, 229, 0.02) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 50%, rgba(220, 20, 60, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(30, 144, 255, 0.02) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 80%, rgba(57, 255, 20, 0.02) 0%, transparent 50%);
   background-attachment: fixed;
 }
@@ -57,23 +57,23 @@ body {
   .gaming-card {
     @apply relative rounded-lg border border-gaming-border bg-gaming-card/80
            backdrop-blur-sm p-6 transition-all duration-300;
-    box-shadow: 0 0 0 1px rgba(0, 240, 255, 0.05);
+    box-shadow: 0 0 0 1px rgba(220, 20, 60, 0.05);
   }
 
   .gaming-card:hover {
-    border-color: rgba(0, 240, 255, 0.4);
+    border-color: rgba(220, 20, 60, 0.4);
     box-shadow:
-      0 0 15px rgba(0, 240, 255, 0.1),
-      0 0 30px rgba(0, 240, 255, 0.05),
-      inset 0 0 15px rgba(0, 240, 255, 0.03);
+      0 0 15px rgba(220, 20, 60, 0.1),
+      0 0 30px rgba(220, 20, 60, 0.05),
+      inset 0 0 15px rgba(220, 20, 60, 0.03);
   }
 
   .gaming-card-magenta:hover {
-    border-color: rgba(255, 0, 229, 0.4);
+    border-color: rgba(30, 144, 255, 0.4);
     box-shadow:
-      0 0 15px rgba(255, 0, 229, 0.1),
-      0 0 30px rgba(255, 0, 229, 0.05),
-      inset 0 0 15px rgba(255, 0, 229, 0.03);
+      0 0 15px rgba(30, 144, 255, 0.1),
+      0 0 30px rgba(30, 144, 255, 0.05),
+      inset 0 0 15px rgba(30, 144, 255, 0.03);
   }
 
   .gaming-card-green:hover {
@@ -86,7 +86,7 @@ body {
 
   .section-heading {
     @apply font-gaming text-2xl md:text-3xl font-bold uppercase tracking-wider;
-    background: linear-gradient(135deg, #00f0ff, #a855f7);
+    background: linear-gradient(135deg, #DC143C, #a855f7);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -94,17 +94,17 @@ body {
 
   .section-heading::before {
     content: '// ';
-    -webkit-text-fill-color: rgba(0, 240, 255, 0.4);
+    -webkit-text-fill-color: rgba(220, 20, 60, 0.4);
   }
 
   .neon-text-cyan {
-    color: #00f0ff;
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3);
+    color: #DC143C;
+    text-shadow: 0 0 10px rgba(220, 20, 60, 0.5), 0 0 20px rgba(220, 20, 60, 0.3);
   }
 
   .neon-text-magenta {
-    color: #ff00e5;
-    text-shadow: 0 0 10px rgba(255, 0, 229, 0.5), 0 0 20px rgba(255, 0, 229, 0.3);
+    color: #1E90FF;
+    text-shadow: 0 0 10px rgba(30, 144, 255, 0.5), 0 0 20px rgba(30, 144, 255, 0.3);
   }
 
   .neon-text-green {
@@ -113,8 +113,8 @@ body {
   }
 
   .neon-border {
-    border: 1px solid rgba(0, 240, 255, 0.3);
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.1), inset 0 0 10px rgba(0, 240, 255, 0.05);
+    border: 1px solid rgba(220, 20, 60, 0.3);
+    box-shadow: 0 0 10px rgba(220, 20, 60, 0.1), inset 0 0 10px rgba(220, 20, 60, 0.05);
   }
 
   .gaming-btn {
@@ -126,7 +126,7 @@ body {
 
   .gaming-btn:hover {
     @apply bg-neon-cyan/10 border-neon-cyan text-white;
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3), 0 0 40px rgba(0, 240, 255, 0.1);
+    box-shadow: 0 0 20px rgba(220, 20, 60, 0.3), 0 0 40px rgba(220, 20, 60, 0.1);
   }
 
   .gaming-btn::before {
@@ -182,12 +182,18 @@ body {
   .gaming-input {
     @apply w-full bg-gaming-dark border border-gaming-border px-4 py-3
            font-body text-slate-200 placeholder-slate-600
-           focus:outline-none focus:border-neon-cyan/50 transition-all duration-300;
+           focus:outline-none transition-all duration-300;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: text;
+    position: relative;
+    z-index: 1;
   }
 
   .gaming-input:focus {
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 240, 255, 0.1);
+    border-color: rgba(220, 20, 60, 0.6);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3), 0 0 20px rgba(220, 20, 60, 0.15), 0 0 40px rgba(220, 20, 60, 0.05);
   }
 
   .xp-bar {
@@ -196,15 +202,15 @@ body {
 
   .xp-bar-fill {
     @apply h-full rounded-full transition-all duration-1000 ease-out;
-    background: linear-gradient(90deg, #00f0ff, #a855f7);
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+    background: linear-gradient(90deg, #DC143C, #a855f7);
+    box-shadow: 0 0 10px rgba(220, 20, 60, 0.5);
   }
 
   .grid-overlay {
     @apply pointer-events-none absolute inset-0;
     background-image:
-      linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+      linear-gradient(rgba(220, 20, 60, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(220, 20, 60, 0.02) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 }
@@ -226,14 +232,14 @@ body {
 .glitch-text::before {
   animation: glitch-shift 3s infinite;
   clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-  color: #ff00e5;
+  color: #1E90FF;
   opacity: 0.5;
 }
 
 .glitch-text::after {
   animation: glitch-shift 3s infinite reverse;
   clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-  color: #00f0ff;
+  color: #DC143C;
   opacity: 0.5;
 }
 
@@ -267,8 +273,8 @@ body {
     0deg,
     transparent,
     transparent 2px,
-    rgba(0, 240, 255, 0.008) 2px,
-    rgba(0, 240, 255, 0.008) 4px
+    rgba(220, 20, 60, 0.008) 2px,
+    rgba(220, 20, 60, 0.008) 4px
   );
 }
 
@@ -284,8 +290,8 @@ body {
   transform: perspective(800px) rotateX(2deg) rotateY(-2deg) scale(1.03) translateZ(20px);
   box-shadow:
     0 25px 50px rgba(0, 0, 0, 0.5),
-    0 0 30px rgba(0, 240, 255, 0.15),
-    inset 0 0 30px rgba(0, 240, 255, 0.05);
+    0 0 30px rgba(220, 20, 60, 0.15),
+    inset 0 0 30px rgba(220, 20, 60, 0.05);
 }
 
 /* ── Holographic Shimmer ── */
@@ -303,8 +309,8 @@ body {
   background: linear-gradient(
     45deg,
     transparent 30%,
-    rgba(0, 240, 255, 0.06) 40%,
-    rgba(255, 0, 229, 0.06) 50%,
+    rgba(220, 20, 60, 0.06) 40%,
+    rgba(30, 144, 255, 0.06) 50%,
     transparent 60%
   );
   animation: holo-sweep 5s linear infinite;
@@ -327,7 +333,7 @@ body {
   padding: 2px;
   background: linear-gradient(
     var(--border-angle, 0deg),
-    #00f0ff, #ff00e5, #39ff14, #00f0ff
+    #DC143C, #1E90FF, #39ff14, #DC143C
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -352,7 +358,7 @@ body {
 /* ── Cyber Text Reveal ── */
 .text-reveal {
   background: linear-gradient(90deg,
-    #00f0ff 0%, #00f0ff 50%,
+    #DC143C 0%, #DC143C 50%,
     transparent 50%, transparent 100%
   );
   background-size: 200% 100%;
@@ -370,16 +376,16 @@ body {
 .glass-morph {
   background: rgba(17, 17, 24, 0.6);
   backdrop-filter: blur(20px) saturate(1.5);
-  border: 1px solid rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(220, 20, 60, 0.1);
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .glass-morph:hover {
   background: rgba(17, 17, 24, 0.8);
-  border-color: rgba(0, 240, 255, 0.3);
+  border-color: rgba(220, 20, 60, 0.3);
   backdrop-filter: blur(30px) saturate(2);
   box-shadow:
-    0 8px 32px 0 rgba(0, 240, 255, 0.15),
-    inset 0 0 30px rgba(0, 240, 255, 0.05);
+    0 8px 32px 0 rgba(220, 20, 60, 0.15),
+    inset 0 0 30px rgba(220, 20, 60, 0.05);
 }
 
 /* ── Liquid Button Hover ── */
@@ -396,7 +402,7 @@ body {
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 240, 255, 0.3) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(220, 20, 60, 0.3) 0%, transparent 70%);
   transform: translate(-50%, -50%);
   transition: width 0.6s ease, height 0.6s ease;
   pointer-events: none;
@@ -406,7 +412,7 @@ body {
   height: 300%;
 }
 .liquid-btn:hover {
-  text-shadow: 0 0 15px rgba(0, 240, 255, 0.8);
+  text-shadow: 0 0 15px rgba(220, 20, 60, 0.8);
   transform: translateY(-2px);
 }
 
@@ -422,7 +428,7 @@ body {
   left: -100%;
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #00f0ff, transparent);
+  background: linear-gradient(90deg, transparent, #DC143C, transparent);
   animation: data-flow 3s linear infinite;
 }
 .data-stream::after {
@@ -432,7 +438,7 @@ body {
   right: -100%;
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #ff00e5, transparent);
+  background: linear-gradient(90deg, transparent, #1E90FF, transparent);
   animation: data-flow-reverse 3s linear infinite;
 }
 @keyframes data-flow {
@@ -456,9 +462,9 @@ body {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #00f0ff, #ff00e5, #39ff14);
+  background: linear-gradient(90deg, #DC143C, #1E90FF, #39ff14);
   transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.2);
+  box-shadow: 0 0 10px rgba(220, 20, 60, 0.5), 0 0 20px rgba(220, 20, 60, 0.2);
 }
 .electric-underline:hover::after {
   width: 100%;
@@ -481,10 +487,10 @@ body {
   animation: heartbeat 2.5s ease-in-out infinite;
 }
 @keyframes heartbeat {
-  0%, 100% { box-shadow: 0 0 5px rgba(0, 240, 255, 0.2); }
-  14% { box-shadow: 0 0 25px rgba(0, 240, 255, 0.6), 0 0 60px rgba(0, 240, 255, 0.2); }
-  28% { box-shadow: 0 0 5px rgba(0, 240, 255, 0.2); }
-  42% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.5), 0 0 50px rgba(0, 240, 255, 0.15); }
+  0%, 100% { box-shadow: 0 0 5px rgba(220, 20, 60, 0.2); }
+  14% { box-shadow: 0 0 25px rgba(220, 20, 60, 0.6), 0 0 60px rgba(220, 20, 60, 0.2); }
+  28% { box-shadow: 0 0 5px rgba(220, 20, 60, 0.2); }
+  42% { box-shadow: 0 0 20px rgba(220, 20, 60, 0.5), 0 0 50px rgba(220, 20, 60, 0.15); }
 }
 
 /* ── Neon Trail Cursor ── */
@@ -497,7 +503,7 @@ body {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(220, 20, 60, 0.08) 0%, transparent 70%);
   pointer-events: none;
   transform: translate(-50%, -50%);
   opacity: 0;
@@ -521,7 +527,7 @@ body {
   }
   50% {
     filter: blur(2px) brightness(1.5);
-    text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+    text-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
   }
   100% {
     opacity: 1;
@@ -554,16 +560,16 @@ body {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(0, 240, 255, 0.1) 15%,
-    rgba(0, 240, 255, 0.6) 30%,
-    rgba(255, 0, 229, 0.6) 50%,
-    rgba(0, 240, 255, 0.6) 70%,
-    rgba(0, 240, 255, 0.1) 85%,
+    rgba(220, 20, 60, 0.1) 15%,
+    rgba(220, 20, 60, 0.6) 30%,
+    rgba(30, 144, 255, 0.6) 50%,
+    rgba(220, 20, 60, 0.6) 70%,
+    rgba(220, 20, 60, 0.1) 85%,
     transparent 100%
   );
   box-shadow:
-    0 0 10px rgba(0, 240, 255, 0.3),
-    0 0 30px rgba(0, 240, 255, 0.1);
+    0 0 10px rgba(220, 20, 60, 0.3),
+    0 0 30px rgba(220, 20, 60, 0.1);
   animation: divider-pulse 3s ease-in-out infinite;
 }
 @keyframes divider-pulse {
@@ -575,7 +581,7 @@ body {
 .cursor-blink::after {
   content: '▊';
   animation: cursor-blink 1s step-end infinite;
-  color: #00f0ff;
+  color: #DC143C;
 }
 @keyframes cursor-blink {
   0%, 100% { opacity: 1; }
@@ -606,7 +612,7 @@ body {
 }
 .hex-clip:hover {
   clip-path: polygon(50% 2%, 98% 26%, 98% 74%, 50% 98%, 2% 74%, 2% 26%);
-  filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.4));
+  filter: drop-shadow(0 0 15px rgba(220, 20, 60, 0.4));
 }
 
 /* ── Power-Up Flash ── */
@@ -616,7 +622,7 @@ body {
 .power-flash:active {
   filter: brightness(2) saturate(1.5);
   transform: scale(0.95);
-  box-shadow: 0 0 40px rgba(0, 240, 255, 0.6);
+  box-shadow: 0 0 40px rgba(220, 20, 60, 0.6);
 }
 
 /* ── Chromatic Aberration Text ── */
@@ -625,9 +631,9 @@ body {
 }
 .chromatic-text:hover {
   text-shadow:
-    -2px 0 rgba(0, 240, 255, 0.7),
-    2px 0 rgba(255, 0, 229, 0.7),
-    0 0 20px rgba(0, 240, 255, 0.3);
+    -2px 0 rgba(220, 20, 60, 0.7),
+    2px 0 rgba(30, 144, 255, 0.7),
+    0 0 20px rgba(220, 20, 60, 0.3);
 }
 
 /* ── Rotating Border Gradient ── */
@@ -639,9 +645,16 @@ body {
 .rotating-border {
   border-image: linear-gradient(
     var(--border-angle, 0deg),
-    #00f0ff, #ff00e5, #39ff14
+    #DC143C, #1E90FF, #39ff14
   ) 1;
   animation: border-spin 3s linear infinite;
+}
+
+/* ── Terminal Card ── */
+.terminal-card {
+  @apply bg-gaming-dark/80 border border-gaming-border p-5 rounded-md font-mono;
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(220, 20, 60, 0.06), 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
 /* ── Glow-on-Scroll (JS toggles .in-view) ── */
@@ -653,5 +666,135 @@ body {
 .glow-on-view.in-view {
   opacity: 1;
   transform: translateY(0);
-  filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.2));
+  filter: drop-shadow(0 0 8px rgba(220, 20, 60, 0.2));
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PERFECT GAMING EXPERIENCE — FINAL POLISH
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── CRT Vignette overlay ── */
+.vignette-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 44;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+}
+
+/* ── Section entrance glow pulse ── */
+.gaming-section {
+  position: relative;
+  overflow: hidden;
+}
+.gaming-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(220, 20, 60, 0.08) 20%,
+    rgba(220, 20, 60, 0.15) 50%,
+    rgba(220, 20, 60, 0.08) 80%,
+    transparent 100%
+  );
+  opacity: 0.5;
+}
+
+/* ── Crosshair cursor for game area ── */
+.crosshair-cursor {
+  cursor: crosshair;
+}
+
+/* ── Enhanced gaming button active state ── */
+.gaming-btn:active {
+  filter: brightness(1.3) saturate(1.2);
+  transform: scale(0.97);
+  transition: all 0.1s ease;
+}
+
+/* ── Improved focus states for accessibility ── */
+.gaming-btn:focus-visible,
+.gaming-input:focus-visible {
+  outline: 2px solid rgba(220, 20, 60, 0.6);
+  outline-offset: 2px;
+}
+
+/* ── Smoother hover transitions ── */
+.gaming-tag {
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ── Subtle text selection color ── */
+::selection {
+  background: rgba(220, 20, 60, 0.2);
+  color: #ffffff;
+}
+
+/* ── Loading shimmer for skeleton states ── */
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(42, 42, 58, 0.3) 0%,
+    rgba(220, 20, 60, 0.05) 50%,
+    rgba(42, 42, 58, 0.3) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-sweep 2s linear infinite;
+}
+@keyframes shimmer-sweep {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ── Pulse ring effect ── */
+.pulse-ring {
+  position: relative;
+}
+.pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 1px solid rgba(220, 20, 60, 0.3);
+  animation: pulse-ring-expand 2s ease-out infinite;
+}
+@keyframes pulse-ring-expand {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.15); opacity: 0; }
+}
+
+/* ── Enhanced card depth shadows ── */
+.gaming-card {
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ── Mobile touch-friendly hit areas ── */
+@media (max-width: 768px) {
+  .gaming-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .gaming-tag {
+    padding: 6px 12px;
+  }
+}
+
+/* ── Print styles (hide interactive elements) ── */
+@media print {
+  .scan-lines,
+  .noise-bg,
+  .grid-overlay,
+  .hud-corner,
+  .gaming-btn {
+    display: none !important;
+  }
 }
