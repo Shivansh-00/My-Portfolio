@@ -6,6 +6,21 @@ import { useInView } from "react-intersection-observer";
 import { useRef, useCallback } from "react";
 import { headingReveal, staggerContainer, fadeInUp } from "@/lib/animations";
 
+function openUrl(url: string) {
+  try {
+    const a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } catch {
+    // ultimate fallback
+    window.location.href = url;
+  }
+}
+
 function ProjectCard({
   project,
   index,
@@ -37,18 +52,21 @@ function ProjectCard({
     mouseY.set(0.5);
   }, [mouseX, mouseY]);
 
+  const handleCardClick = useCallback((e: React.MouseEvent) => {
+    // Don't trigger if clicking on an actual link inside the card
+    if ((e.target as HTMLElement).closest("a")) return;
+    if (project.repoUrl) openUrl(project.repoUrl);
+  }, [project.repoUrl]);
+
   return (
     <motion.article
       ref={cardRef}
       variants={fadeInUp}
       onMouseMove={handleMouse}
       onMouseLeave={handleLeave}
-      onClick={() => {
-        if (project.repoUrl) window.open(project.repoUrl, "_blank", "noopener,noreferrer");
-      }}
+      onClick={handleCardClick}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
       whileHover={{ scale: 1.04, y: -8 }}
-      whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.3 }}
       className={`gaming-card group cursor-pointer holo-shimmer relative ${
         project.featured ? "" : "gaming-card-green"
