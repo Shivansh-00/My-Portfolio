@@ -6,21 +6,6 @@ import { useInView } from "react-intersection-observer";
 import { useRef, useCallback } from "react";
 import { headingReveal, staggerContainer, fadeInUp } from "@/lib/animations";
 
-function openUrl(url: string) {
-  try {
-    const a = document.createElement("a");
-    a.href = url;
-    a.target = "_blank";
-    a.rel = "noopener noreferrer";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  } catch {
-    // ultimate fallback
-    window.location.href = url;
-  }
-}
-
 function ProjectCard({
   project,
   index,
@@ -52,19 +37,12 @@ function ProjectCard({
     mouseY.set(0.5);
   }, [mouseX, mouseY]);
 
-  const handleCardClick = useCallback((e: React.MouseEvent) => {
-    // Don't trigger if clicking on an actual link inside the card
-    if ((e.target as HTMLElement).closest("a")) return;
-    if (project.repoUrl) openUrl(project.repoUrl);
-  }, [project.repoUrl]);
-
   return (
     <motion.article
       ref={cardRef}
       variants={fadeInUp}
       onMouseMove={handleMouse}
       onMouseLeave={handleLeave}
-      onClick={handleCardClick}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
       whileHover={{ scale: 1.04, y: -8 }}
       transition={{ duration: 0.3 }}
@@ -72,6 +50,21 @@ function ProjectCard({
         project.featured ? "" : "gaming-card-green"
       }`}
     >
+      {/* 
+        Native <a> overlay — covers the entire card so taps/clicks
+        are handled by the browser, NOT by JavaScript.
+        Works reliably on every mobile browser.
+      */}
+      {project.repoUrl && (
+        <a
+          href={project.repoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open ${project.name} on GitHub`}
+          className="absolute inset-0 z-20"
+        />
+      )}
+
       <div className="hud-corner hud-corner-tl" />
       <div className="hud-corner hud-corner-tr" />
       <div className="hud-corner hud-corner-bl" />
@@ -120,31 +113,27 @@ function ProjectCard({
         ))}
       </div>
 
-      {/* Action links */}
-      <div className="pt-4 border-t border-gaming-border flex gap-4">
+      {/* Action links — z-30 so they sit ABOVE the card overlay (z-20) */}
+      <div className="relative z-30 pt-4 border-t border-gaming-border flex gap-4">
         {project.repoUrl && (
-          <motion.a
+          <a
             href={project.repoUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="font-gaming text-xs uppercase tracking-widest text-slate-500 hover:text-neon-cyan transition-all duration-300 flex items-center gap-2"
-            whileHover={{ x: 4 }}
-            onClick={(e) => e.stopPropagation()}
           >
             <span>⬡</span> Source
-          </motion.a>
+          </a>
         )}
         {project.liveUrl && (
-          <motion.a
+          <a
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="font-gaming text-xs uppercase tracking-widest text-slate-500 hover:text-neon-green transition-all duration-300 flex items-center gap-2"
-            whileHover={{ x: 4 }}
-            onClick={(e) => e.stopPropagation()}
           >
             <span>▶</span> Deploy
-          </motion.a>
+          </a>
         )}
       </div>
 
