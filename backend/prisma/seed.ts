@@ -86,7 +86,7 @@ async function main() {
       startDate: "2023-08",
       endDate: null,
       highlights: JSON.stringify([
-        "CGPA: 9.069 / 10.00",
+        "CGPA: 9.326 / 10.00",
         "100% Founder's Scholarship Recipient (Full Tuition Fee Waiver)",
         "All India Rank 15 in SRMJEEE 2023 among 100,000+ candidates"
       ])

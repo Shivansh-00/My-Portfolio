@@ -67,7 +67,7 @@ export const staticExperience: ExperienceItem[] = [
     organization: "SRM Institute of Science and Technology, Chennai",
     startDate: "2023-08",
     highlights: [
-      "CGPA: 9.069 / 10.00",
+      "CGPA: 9.32 / 10.00",
       "100% Founder's Scholarship Recipient (Full Tuition Fee Waiver)",
       "All India Rank 15 in SRMJEEE 2023 among 100,000+ candidates",
     ],
