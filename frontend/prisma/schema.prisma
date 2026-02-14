@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id       String @id @default(uuid())
+  name     String
+  role     String
+  email    String
+  linkedin String
+  github   String
+  leetcode String
+}
+
+model SkillCategory {
+  id     String  @id @default(uuid())
+  name   String
+  skills Skill[]
+}
+
+model Skill {
+  id         String        @id @default(uuid())
+  name       String
+  category   SkillCategory @relation(fields: [categoryId], references: [id])
+  categoryId String
+}
+
+model Experience {
+  id           String  @id @default(uuid())
+  title        String
+  organization String
+  startDate    String
+  endDate      String?
+  highlights   String  @default("[]")
+}
+
+model Project {
+  id          String  @id @default(uuid())
+  name        String
+  description String
+  tags        String  @default("[]")
+  featured    Boolean @default(false)
+  repoUrl     String?
+  liveUrl     String?
+  isVisible   Boolean @default(true)
+}
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}

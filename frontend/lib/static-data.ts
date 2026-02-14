@@ -154,7 +154,7 @@ export const staticProjects: Project[] = [
       "Research-grade AI-powered financial analytics platform that transforms traditional option pricing into an intelligent, production-ready system. Leverages Monte Carlo simulations for stochastic price modeling and integrates NLP-based parameter extraction to intelligently process financial inputs.",
     tags: ["AI", "Quant Finance", "Monte Carlo", "Deep Learning", "NLP", "Risk Analytics"],
     featured: true,
-    repoUrl: "https://github.com/Shivansh-00/Intelligent-Option-Pricing",
+    repoUrl: "https://github.com/Shivansh-00/Option-Pricing-Using-Monte-Carlo-Simulation-Deep-Learning",
   },
   {
     id: "proj-2",
