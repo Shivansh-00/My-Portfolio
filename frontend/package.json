@@ -17,13 +17,13 @@
     "prisma:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "^5.15.0",
     "@react-three/drei": "^9.88.0",
     "@react-three/fiber": "^8.15.0",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
-    "emailjs-com": "^3.2.0",
     "framer-motion": "^11.0.0",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.4",

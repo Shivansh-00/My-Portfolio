@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSfx } from "@/lib/use-sfx";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 
 const schema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -17,44 +17,37 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-/* ── EmailJS — client-side email delivery ──
-   These are public keys (safe to embed in client code).
-   Override via env vars if needed.                          */
-const EMAILJS_SERVICE_ID  = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID  || "service_w0509yt";
-const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_e2c47d3";
-const EMAILJS_PUBLIC_KEY  = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY  || "STfj2LyESwT9yfnDZ";
+const SERVICE_ID  = "service_w0509yt";
+const TEMPLATE_ID = "template_e2c47d3";
+const PUBLIC_KEY  = "STfj2LyESwT9yfnDZ";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const formRef = useRef<HTMLFormElement>(null);
   const sfx = useSfx();
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({ resolver: zodResolver(schema) });
 
   const onSubmit = async (values: FormValues) => {
     if (values.company) return; // honeypot
-    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
-      console.error("EmailJS is not configured. Set NEXT_PUBLIC_EMAILJS_SERVICE_ID, NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, and NEXT_PUBLIC_EMAILJS_PUBLIC_KEY.");
-      setStatus("error");
-      sfx.play("error");
-      return;
-    }
     try {
       setStatus("sending");
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
+      const result = await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
         {
           from_name: values.name,
           from_email: values.email,
           message: values.message,
           to_name: "Shivansh",
         },
-        EMAILJS_PUBLIC_KEY
+        { publicKey: PUBLIC_KEY }
       );
+      console.log("EmailJS result:", result.status, result.text);
       setStatus("sent");
       sfx.play("success");
       reset();
     } catch (error) {
-      console.error(error);
+      console.error("EmailJS error:", error);
       setStatus("error");
       sfx.play("error");
     }
