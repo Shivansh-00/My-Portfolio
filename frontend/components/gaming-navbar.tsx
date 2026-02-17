@@ -6,12 +6,12 @@ import { useSfx } from "@/lib/use-sfx";
 
 const navItems = [
   { label: "HOME", href: "#hero", icon: "◆" },
-  { label: "STATS", href: "#stats", icon: "◈" },
-  { label: "SKILLS", href: "#skills", icon: "⬡" },
-  { label: "MISSIONS", href: "#experience", icon: "⚔" },
+  { label: "INTEL", href: "#stats", icon: "◈" },
+  { label: "ARSENAL", href: "#skills", icon: "⬡" },
+  { label: "CASE FILES", href: "#experience", icon: "⚔" },
   { label: "PROJECTS", href: "#projects", icon: "⬢" },
   { label: "GAME", href: "#game", icon: "🎮" },
-  { label: "CONTACT", href: "#contact", icon: "✉" },
+  { label: "SIGNAL", href: "#contact", icon: "✉" },
 ];
 
 export default function GamingNavbar() {
@@ -65,7 +65,7 @@ export default function GamingNavbar() {
           transition={{ type: "spring", stiffness: 300, damping: 15 }}
         >
           <div className="w-8 h-8 border border-neon-cyan/40 rotate-45 flex items-center justify-center cursor-pointer">
-            <span className="font-gaming text-[10px] neon-text-cyan -rotate-45">SS</span>
+            <span className="font-gaming text-[10px] neon-text-cyan -rotate-45">BK</span>
           </div>
         </motion.div>
 
@@ -91,7 +91,7 @@ export default function GamingNavbar() {
                     layoutId="nav-indicator"
                     className="absolute -right-[1px] h-6 w-[2px] bg-neon-cyan"
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    style={{ boxShadow: "0 0 8px rgba(220,20,60,0.6)" }}
+                    style={{ boxShadow: "0 0 8px rgba(212,168,83,0.6)" }}
                   />
                 )}
                 <div className="absolute left-14 px-3 py-1.5 bg-gaming-card border border-gaming-border
@@ -111,8 +111,8 @@ export default function GamingNavbar() {
               className="absolute top-0 left-0 w-full rounded-full"
               style={{
                 height: progressHeight,
-                background: "linear-gradient(to bottom, #DC143C, #a855f7, #1E90FF)",
-                boxShadow: "0 0 6px rgba(220,20,60,0.5)",
+                background: "linear-gradient(to bottom, #D4A853, #6B5B95, #8896A8)",
+                boxShadow: "0 0 6px rgba(212,168,83,0.5)",
               }}
             />
           </div>
@@ -130,7 +130,7 @@ export default function GamingNavbar() {
       >
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 border border-neon-cyan/40 rotate-45 flex items-center justify-center">
-            <span className="font-gaming text-[9px] neon-text-cyan -rotate-45">SS</span>
+            <span className="font-gaming text-[9px] neon-text-cyan -rotate-45">BK</span>
           </div>
           <span className="font-gaming text-xs tracking-widest text-slate-400">PORTFOLIO</span>
         </div>
@@ -178,7 +178,7 @@ export default function GamingNavbar() {
                   <motion.span
                     layoutId="mobile-indicator"
                     className="w-1.5 h-1.5 bg-neon-cyan rounded-full ml-2"
-                    style={{ boxShadow: "0 0 8px rgba(220,20,60,0.8)" }}
+                    style={{ boxShadow: "0 0 8px rgba(212,168,83,0.8)" }}
                   />
                 )}
               </motion.button>

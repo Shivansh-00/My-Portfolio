@@ -35,12 +35,12 @@ function SectionDivider({ variant = "cyan" }: { variant?: "cyan" | "magenta" | "
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rotate-45 border"
               style={{
                 borderColor:
-                  variant === "cyan" ? "rgba(0,240,255,0.4)" :
-                  variant === "magenta" ? "rgba(255,0,229,0.4)" :
+                  variant === "cyan" ? "rgba(212,168,83,0.4)" :
+                  variant === "magenta" ? "rgba(136,150,168,0.4)" :
                   "rgba(57,255,20,0.4)",
                 boxShadow:
-                  variant === "cyan" ? "0 0 8px rgba(0,240,255,0.3)" :
-                  variant === "magenta" ? "0 0 8px rgba(255,0,229,0.3)" :
+                  variant === "cyan" ? "0 0 8px rgba(212,168,83,0.3)" :
+                  variant === "magenta" ? "0 0 8px rgba(136,150,168,0.3)" :
                   "0 0 8px rgba(57,255,20,0.3)",
               }}
             />

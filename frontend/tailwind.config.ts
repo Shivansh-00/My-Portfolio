@@ -6,40 +6,40 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          50: "#fef2f2",
-          500: "#dc2626",
-          700: "#b91c1c"
+          50: "#fffbeb",
+          500: "#D4A853",
+          700: "#B8860B"
         },
-        spidey: {
-          red: "#DC143C",
-          "red-bright": "#FF1744",
-          "red-dark": "#8B0000",
-          blue: "#1E3A8A",
-          "blue-bright": "#3B82F6",
-          "blue-deep": "#0A1628",
-          web: "#C8D6E5",
-          "web-bright": "#E8EDF5",
-          "web-dim": "#6B7DA0",
-          white: "#F0F4FF",
-          gold: "#FFD700",
-          electric: "#00D4FF"
+        bat: {
+          gold: "#D4A853",
+          "gold-bright": "#FFD700",
+          "gold-dark": "#B8860B",
+          grey: "#8896A8",
+          "grey-bright": "#A8B8C8",
+          "grey-dim": "#4A5568",
+          steel: "#2D3748",
+          obsidian: "#0A0A12",
+          "dark-blue": "#0F1628",
+          silver: "#C0C8D4",
+          amber: "#F59E0B",
+          crimson: "#8B0000",
         },
         neon: {
-          cyan: "#DC143C",
-          magenta: "#1E90FF",
+          cyan: "#D4A853",
+          magenta: "#8896A8",
           green: "#39ff14",
           orange: "#ff6a00",
           yellow: "#FFD700",
-          red: "#DC143C",
-          blue: "#1E90FF",
-          purple: "#a855f7"
+          red: "#8B0000",
+          blue: "#4A6FA5",
+          purple: "#6B5B95"
         },
         gaming: {
-          dark: "#060618",
-          panel: "#0C0C24",
-          card: "#111132",
-          border: "#1E1E4A",
-          surface: "#14142E"
+          dark: "#05050D",
+          panel: "#0A0A18",
+          card: "#0E0E1E",
+          border: "#1A1A2E",
+          surface: "#111120"
         }
       },
       fontFamily: {
@@ -67,14 +67,14 @@ const config: Config = {
         "shake": "shake 0.4s ease-in-out",
         "electric-surge": "electric-surge 0.8s ease-out",
         "hue-rotate": "hue-rotate 6s linear infinite",
-        "web-swing": "web-swing 3s ease-in-out infinite",
-        "spider-sense": "spider-sense 1.5s ease-in-out infinite",
-        "web-pulse": "web-pulse 2s ease-in-out infinite"
+        "bat-signal": "bat-signal 3s ease-in-out infinite",
+        "lightning": "lightning 8s linear infinite",
+        "rain-fall": "rain-fall 1s linear infinite",
       },
       keyframes: {
         "glow-pulse": {
-          "0%, 100%": { boxShadow: "0 0 5px rgba(220,20,60,0.3), 0 0 20px rgba(220,20,60,0.1)" },
-          "50%": { boxShadow: "0 0 20px rgba(220,20,60,0.6), 0 0 60px rgba(220,20,60,0.3)" }
+          "0%, 100%": { boxShadow: "0 0 5px rgba(212,168,83,0.3), 0 0 20px rgba(212,168,83,0.1)" },
+          "50%": { boxShadow: "0 0 20px rgba(212,168,83,0.6), 0 0 60px rgba(212,168,83,0.3)" }
         },
         "scan-line": {
           "0%": { transform: "translateY(-100%)" },
@@ -109,8 +109,8 @@ const config: Config = {
           "100%": { width: "var(--progress-width)" }
         },
         "border-glow": {
-          "0%, 100%": { borderColor: "rgba(220,20,60,0.3)" },
-          "50%": { borderColor: "rgba(220,20,60,0.8)" }
+          "0%, 100%": { borderColor: "rgba(212,168,83,0.3)" },
+          "50%": { borderColor: "rgba(212,168,83,0.8)" }
         },
         "typing": {
           "0%": { width: "0" },
@@ -132,8 +132,8 @@ const config: Config = {
           "100%": { backgroundPosition: "200% 0" }
         },
         "neon-breathe": {
-          "0%, 100%": { textShadow: "0 0 5px rgba(220,20,60,0.3), 0 0 10px rgba(220,20,60,0.2)" },
-          "50%": { textShadow: "0 0 20px rgba(220,20,60,0.8), 0 0 40px rgba(220,20,60,0.4), 0 0 80px rgba(220,20,60,0.2)" }
+          "0%, 100%": { textShadow: "0 0 5px rgba(212,168,83,0.3), 0 0 10px rgba(212,168,83,0.2)" },
+          "50%": { textShadow: "0 0 20px rgba(212,168,83,0.8), 0 0 40px rgba(212,168,83,0.4), 0 0 80px rgba(212,168,83,0.2)" }
         },
         "bounce-in": {
           "0%": { transform: "scale(0.3)", opacity: "0" },
@@ -164,22 +164,27 @@ const config: Config = {
           "0%": { filter: "hue-rotate(0deg)" },
           "100%": { filter: "hue-rotate(360deg)" }
         },
-        "web-swing": {
-          "0%, 100%": { transform: "rotate(-12deg) translateX(-3%)" },
-          "50%": { transform: "rotate(12deg) translateX(3%)" }
-        },
-        "spider-sense": {
-          "0%, 100%": { boxShadow: "0 0 5px rgba(220,20,60,0.2), 0 0 15px rgba(220,20,60,0.1)" },
-          "50%": { boxShadow: "0 0 30px rgba(220,20,60,0.6), 0 0 60px rgba(220,20,60,0.3), 0 0 100px rgba(220,20,60,0.15)" }
-        },
-        "web-pulse": {
+        "bat-signal": {
           "0%, 100%": { opacity: "0.3", transform: "scale(1)" },
           "50%": { opacity: "0.8", transform: "scale(1.05)" }
-        }
+        },
+        "lightning": {
+          "0%, 100%": { opacity: "0" },
+          "8%": { opacity: "0.8" },
+          "10%": { opacity: "0" },
+          "12%": { opacity: "0.5" },
+          "14%": { opacity: "0" },
+        },
+        "rain-fall": {
+          "0%": { transform: "translateY(-100%)", opacity: "0" },
+          "10%": { opacity: "1" },
+          "90%": { opacity: "1" },
+          "100%": { transform: "translateY(100vh)", opacity: "0" }
+        },
       },
       backgroundImage: {
-        "grid-pattern": "linear-gradient(rgba(220,20,60,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(220,20,60,0.03) 1px, transparent 1px)",
-        "cyber-gradient": "linear-gradient(135deg, #060618 0%, #0C0C24 50%, #060618 100%)"
+        "grid-pattern": "linear-gradient(rgba(212,168,83,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(212,168,83,0.03) 1px, transparent 1px)",
+        "cyber-gradient": "linear-gradient(135deg, #05050D 0%, #0A0A18 50%, #05050D 100%)"
       }
     }
   },

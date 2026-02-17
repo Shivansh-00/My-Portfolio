@@ -14,10 +14,10 @@ import {
 } from "@/lib/animations";
 
 const STATUS_LINES = [
-  "> WEB-SHOOTER SYSTEMS CALIBRATED...",
-  "> SPIDER-SENSE NETWORK ACTIVE...",
-  "> SCANNING CITY SKYLINE...",
-  "> ALL WEBS OPERATIONAL ▮",
+  "> BATCOMPUTER SYSTEMS INITIALIZED...",
+  "> GOTHAM SURVEILLANCE NETWORK ACTIVE...",
+  "> SCANNING DARK KNIGHT PROTOCOLS...",
+  "> ALL SYSTEMS OPERATIONAL ▮",
 ];
 
 function TypingText({ text, delay = 0 }: { text: string; delay?: number }) {
@@ -99,15 +99,15 @@ export default function HeroSection({ profile }: { profile: Profile }) {
       <motion.div className="grid-overlay" style={{ opacity: gridOpacity }} />
       <FloatingParticles count={25} />
 
-      <OrbitRing size={500} duration={30} delay={0} color="rgba(220,20,60,0.08)" />
-      <OrbitRing size={700} duration={40} delay={2} color="rgba(30,144,255,0.06)" />
+      <OrbitRing size={500} duration={30} delay={0} color="rgba(212,168,83,0.08)" />
+      <OrbitRing size={700} duration={40} delay={2} color="rgba(136,150,168,0.06)" />
       <OrbitRing size={300} duration={20} delay={1} color="rgba(57,255,20,0.06)" />
-      <OrbitRing size={900} duration={50} delay={3} color="rgba(168,85,247,0.04)" />
+      <OrbitRing size={900} duration={50} delay={3} color="rgba(212,168,83,0.04)" />
 
       {/* Corner coordinates */}
       <div className="absolute top-4 left-4 lg:left-20 font-mono text-[9px] text-slate-700 z-20 hidden md:block">
-        <div>WEB::HERO_MODULE</div>
-        <div>WEB: ACTIVE</div>
+        <div>BAT::HERO_MODULE</div>
+        <div>KNIGHT: ACTIVE</div>
       </div>
       <div className="absolute top-4 right-4 font-mono text-[9px] text-slate-700 z-20 hidden md:block text-right">
         <div>FRAME: 60FPS</div>
@@ -120,7 +120,7 @@ export default function HeroSection({ profile }: { profile: Profile }) {
       <motion.div
         className="absolute w-[800px] h-[800px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(220,20,60,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(212,168,83,0.06) 0%, transparent 70%)",
           top: "50%", left: "50%", transform: "translate(-50%, -50%)",
         }}
         animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
@@ -148,7 +148,7 @@ export default function HeroSection({ profile }: { profile: Profile }) {
             transition={{ duration: 2, repeat: Infinity }}
           >
             <span className="inline-block w-2 h-2 bg-neon-green rounded-full mr-2 animate-pulse" />
-            WEB ACTIVE — HERO DETECTED
+            DARK KNIGHT — PROTOCOL ACTIVE
           </motion.span>
         </motion.div>
 
@@ -166,8 +166,8 @@ export default function HeroSection({ profile }: { profile: Profile }) {
             animate={{ width: "60%", opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              background: "linear-gradient(90deg, transparent, #DC143C, #a855f7, #1E90FF, transparent)",
-              boxShadow: "0 0 12px rgba(220,20,60,0.3)",
+              background: "linear-gradient(90deg, transparent, #D4A853, #6B5B95, #8896A8, transparent)",
+              boxShadow: "0 0 12px rgba(212,168,83,0.3)",
             }}
           />
         </motion.div>
@@ -192,8 +192,8 @@ export default function HeroSection({ profile }: { profile: Profile }) {
             <motion.span className="w-2 h-2 rounded-full bg-neon-red" whileHover={{ scale: 1.5 }} />
             <motion.span className="w-2 h-2 rounded-full bg-neon-yellow" whileHover={{ scale: 1.5 }} />
             <motion.span className="w-2 h-2 rounded-full bg-neon-green" whileHover={{ scale: 1.5 }} />
-            <span className="font-mono text-[10px] text-slate-600 ml-2">web-console@shivansh:~</span>
-            <span className="ml-auto font-mono text-[9px] text-neon-green/50">WEB 100%</span>
+            <span className="font-mono text-[10px] text-slate-600 ml-2">batcomputer@wayne:~</span>
+            <span className="ml-auto font-mono text-[9px] text-neon-green/50">SECURE 100%</span>
           </div>
           {STATUS_LINES.map((line, i) => (
             <div key={i}><TypingText text={line} delay={1400 + i * 600} /></div>
@@ -218,7 +218,7 @@ export default function HeroSection({ profile }: { profile: Profile }) {
               rel="noopener noreferrer"
               className="gaming-btn liquid-btn"
               variants={staggerItem}
-              whileHover={{ scale: 1.08, boxShadow: "0 0 30px rgba(220,20,60,0.4), 0 0 60px rgba(220,20,60,0.15)" }}
+              whileHover={{ scale: 1.08, boxShadow: "0 0 30px rgba(212,168,83,0.4), 0 0 60px rgba(212,168,83,0.15)" }}
               whileTap={{ scale: 0.95 }}
               {...sfx.hover}
               onClick={() => sfx.play("click")}
@@ -245,7 +245,7 @@ export default function HeroSection({ profile }: { profile: Profile }) {
                 animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
                 transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
                 className="w-1 h-1 rounded-full bg-neon-cyan"
-                style={{ boxShadow: "0 0 6px rgba(220,20,60,0.8)" }}
+                style={{ boxShadow: "0 0 6px rgba(212,168,83,0.8)" }}
               />
             </div>
           </motion.div>

@@ -44,9 +44,9 @@ function ScrollProgress() {
         style={{
           scaleX,
           opacity: glowOpacity,
-          background: "linear-gradient(90deg, #DC143C, #a855f7, #1E90FF, #39ff14)",
+          background: "linear-gradient(90deg, #D4A853, #6B5B95, #8896A8, #39ff14)",
           boxShadow:
-            "0 0 10px rgba(220,20,60,0.5), 0 0 20px rgba(220,20,60,0.2)",
+            "0 0 10px rgba(212,168,83,0.5), 0 0 20px rgba(212,168,83,0.2)",
         }}
       />
       {/* Under-glow layer */}
@@ -55,7 +55,7 @@ function ScrollProgress() {
         style={{
           scaleX,
           opacity: useTransform(glowOpacity, [0, 1], [0, 0.3]),
-          background: "linear-gradient(90deg, #DC143C22, #a855f722, #1E90FF22)",
+          background: "linear-gradient(90deg, #D4A85322, #6B5B9522, #8896A822)",
           filter: "blur(4px)",
         }}
       />
@@ -143,7 +143,7 @@ export default function GamingShell({ children }: { children: React.ReactNode })
         className="pointer-events-none fixed inset-0 z-[45] opacity-[0.012]"
         style={{
           background:
-            "repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(220,20,60,0.06) 2px, rgba(220,20,60,0.06) 4px)",
+            "repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(212,168,83,0.06) 2px, rgba(212,168,83,0.06) 4px)",
         }}
       />
 

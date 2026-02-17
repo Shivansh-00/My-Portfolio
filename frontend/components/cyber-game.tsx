@@ -21,7 +21,7 @@ interface FloatingScore {
 type GameState = "idle" | "playing" | "paused" | "gameover";
 
 const TARGET_COLORS: Record<Target["type"], string> = {
-  normal: "#DC143C", fast: "#1E90FF", bonus: "#39ff14", danger: "#ff073a",
+  normal: "#D4A853", fast: "#8896A8", bonus: "#39ff14", danger: "#ff073a",
 };
 
 const LEVEL_CONFIG = [
@@ -322,7 +322,7 @@ export default function CyberGame() {
                 </div>
                 <motion.button
                   onClick={(e) => { e.stopPropagation(); startGame(); }}
-                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(220,20,60,0.4)" }}
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(212,168,83,0.4)" }}
                   whileTap={{ scale: 0.95 }}
                   className="gaming-btn liquid-btn !px-12 !py-4"
                 >▶ INITIALIZE</motion.button>
@@ -446,8 +446,8 @@ export default function CyberGame() {
 
         <div className="flex flex-wrap justify-center gap-6 mt-6">
           {[
-            { color: "#DC143C", label: "STANDARD", pts: "+100" },
-            { color: "#1E90FF", label: "FAST", pts: "+150" },
+            { color: "#D4A853", label: "STANDARD", pts: "+100" },
+            { color: "#8896A8", label: "FAST", pts: "+150" },
             { color: "#39ff14", label: "BONUS", pts: "+200" },
             { color: "#ff073a", label: "DANGER", pts: "-1 LIFE" },
           ].map((item) => (

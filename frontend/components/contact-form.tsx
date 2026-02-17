@@ -114,7 +114,7 @@ export default function ContactForm() {
         type="submit"
         className="gaming-btn w-full"
         disabled={status === "sending"}
-        whileHover={{ scale: 1.02, boxShadow: "0 0 30px rgba(220,20,60,0.3)" }}
+        whileHover={{ scale: 1.02, boxShadow: "0 0 30px rgba(212,168,83,0.3)" }}
         whileTap={{ scale: 0.97 }}
         transition={{ type: "spring", stiffness: 400, damping: 20 }}
       >

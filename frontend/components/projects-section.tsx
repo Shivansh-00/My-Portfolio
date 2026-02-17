@@ -23,7 +23,7 @@ function ProjectCard({
   const rotateY = useSpring(useTransform(mouseX, [0, 1], [-8, 8]), { stiffness: 200, damping: 20 });
   const glareX = useTransform(mouseX, (v) => `${v * 100}%`);
   const glareY = useTransform(mouseY, (v) => `${v * 100}%`);
-  const glareBackground = useMotionTemplate`radial-gradient(circle at ${glareX} ${glareY}, rgba(220,20,60,0.12) 0%, transparent 60%)`;
+  const glareBackground = useMotionTemplate`radial-gradient(circle at ${glareX} ${glareY}, rgba(212,168,83,0.12) 0%, transparent 60%)`;
 
   const handleMouse = useCallback((e: React.MouseEvent) => {
     if (!cardRef.current) return;
@@ -82,9 +82,9 @@ function ProjectCard({
           <motion.span
             className="gaming-tag !border-neon-magenta/40 !text-neon-magenta !bg-neon-magenta/5"
             animate={{ boxShadow: [
-              "0 0 5px rgba(30,144,255,0.1)",
-              "0 0 15px rgba(30,144,255,0.3)",
-              "0 0 5px rgba(30,144,255,0.1)",
+              "0 0 5px rgba(136,150,168,0.1)",
+              "0 0 15px rgba(136,150,168,0.3)",
+              "0 0 5px rgba(136,150,168,0.1)",
             ]}}
             transition={{ duration: 2, repeat: Infinity }}
           >★ LEGENDARY</motion.span>
@@ -108,7 +108,7 @@ function ProjectCard({
             className="font-mono text-[10px] px-2 py-0.5 border border-gaming-border text-slate-500
                        bg-gaming-dark/50 uppercase tracking-wider
                        group-hover:border-neon-cyan/30 group-hover:text-slate-400 transition-all duration-300"
-            whileHover={{ scale: 1.1, borderColor: "rgba(220,20,60,0.6)", color: "#DC143C" }}
+            whileHover={{ scale: 1.1, borderColor: "rgba(212,168,83,0.6)", color: "#D4A853" }}
           >{tag}</motion.span>
         ))}
       </div>
@@ -163,13 +163,13 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
         <motion.h2
           variants={headingReveal} initial="hidden" animate={inView ? "visible" : "hidden"}
           className="section-heading mb-4"
-        >Web Arsenal</motion.h2>
+        >Dark Arsenal</motion.h2>
         <motion.p
           initial={{ opacity: 0, x: -20 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="font-mono text-xs text-slate-500 mb-12"
-        >{">"}  WEB_ARSENAL.scan() — {projects.length} PROJECTS FORGED</motion.p>
+        >{">"}  DARK_ARSENAL.scan() — {projects.length} PROJECTS FORGED</motion.p>
 
         {featured.length > 0 && (
           <div className="mb-10">
@@ -177,7 +177,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
               className="font-gaming text-xs uppercase tracking-[0.3em] text-neon-magenta/60 mb-6"
               initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
               transition={{ delay: 0.4 }}
-            >★ Legendary Items</motion.p>
+            >★ Elite Projects</motion.p>
             <motion.div
               className="grid gap-6 md:grid-cols-2"
               variants={staggerContainer(0.15, 0.3)}
@@ -196,7 +196,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
               className="font-gaming text-xs uppercase tracking-[0.3em] text-slate-600 mb-6"
               initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
               transition={{ delay: 0.6 }}
-            >◆ Inventory</motion.p>
+            >◆ Utility Belt</motion.p>
             <motion.div
               className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
               variants={staggerContainer(0.1, 0.5)}

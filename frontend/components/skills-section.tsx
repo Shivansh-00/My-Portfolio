@@ -28,8 +28,8 @@ function SkillOrb({ skill, index }: { skill: string; index: number }) {
       whileHover={{
         scale: 1.15,
         y: -4,
-        boxShadow: "0 0 25px rgba(220,20,60,0.5), 0 0 50px rgba(220,20,60,0.15)",
-        borderColor: "rgba(220,20,60,0.8)",
+        boxShadow: "0 0 25px rgba(212,168,83,0.5), 0 0 50px rgba(212,168,83,0.15)",
+        borderColor: "rgba(212,168,83,0.8)",
         color: "#fff",
       }}
       whileTap={{ scale: 0.9 }}
@@ -77,7 +77,7 @@ function SkillCategoryCard({
               {category.name}
             </h3>
             <p className="font-mono text-[10px] text-slate-600">
-              SKILL_TREE::LVL_{category.skills.length}
+              BAT_ARSENAL::LVL_{category.skills.length}
             </p>
           </div>
           <div className="ml-auto">
@@ -129,7 +129,7 @@ export default function SkillsSection({ skills }: { skills: SkillCategory[] }) {
           animate={inView ? "visible" : "hidden"}
           className="section-heading mb-4"
         >
-          Skill Tree
+          Arsenal
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, x: -20 }}
@@ -137,7 +137,7 @@ export default function SkillsSection({ skills }: { skills: SkillCategory[] }) {
           transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="font-mono text-xs text-slate-500 mb-12"
         >
-          {">"}  ABILITY_INVENTORY.load() — {skills.reduce((a, c) => a + c.skills.length, 0)} POWERS UNLOCKED
+          {">"}  BAT_ARSENAL.load() — {skills.reduce((a, c) => a + c.skills.length, 0)} TOOLS EQUIPPED
         </motion.p>
 
         <motion.div

@@ -27,7 +27,7 @@ function QuestCard({
       {/* Timeline line */}
       <motion.div
         className="absolute left-0 top-0 bottom-0 w-px"
-        style={{ background: "linear-gradient(to bottom, rgba(220,20,60,0.5), rgba(220,20,60,0.1), transparent)", transformOrigin: "top" }}
+        style={{ background: "linear-gradient(to bottom, rgba(212,168,83,0.5), rgba(212,168,83,0.1), transparent)", transformOrigin: "top" }}
         initial={{ scaleY: 0 }}
         animate={inView ? { scaleY: 1 } : {}}
         transition={{ duration: 1, delay: index * 0.2, ease: [0.22, 1, 0.36, 1] }}
@@ -48,9 +48,9 @@ function QuestCard({
               className="absolute inset-0"
               animate={{
                 boxShadow: [
-                  "0 0 5px rgba(220,20,60,0.5)",
-                  "0 0 25px rgba(220,20,60,0.9)",
-                  "0 0 5px rgba(220,20,60,0.5)",
+                  "0 0 5px rgba(212,168,83,0.5)",
+                  "0 0 25px rgba(212,168,83,0.9)",
+                  "0 0 5px rgba(212,168,83,0.5)",
                 ],
               }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -66,7 +66,7 @@ function QuestCard({
           scale: 1.02,
           y: -4,
           boxShadow: isActive
-            ? "0 0 30px rgba(220,20,60,0.2), 0 0 60px rgba(220,20,60,0.05)"
+            ? "0 0 30px rgba(212,168,83,0.2), 0 0 60px rgba(212,168,83,0.05)"
             : "0 0 30px rgba(57,255,20,0.15)",
         }}
         transition={{ duration: 0.3 }}
@@ -83,10 +83,10 @@ function QuestCard({
               transition={{ duration: 2, repeat: Infinity }}
             >
               <span className="inline-block w-1.5 h-1.5 bg-neon-green rounded-full mr-1.5 animate-pulse" />
-              ACTIVE MISSION
+              ACTIVE CASE
             </motion.span>
           ) : (
-            <span className="gaming-tag !border-slate-600 !text-slate-500 !bg-slate-800/30">✓ COMPLETED</span>
+            <span className="gaming-tag !border-slate-600 !text-slate-500 !bg-slate-800/30">✓ CASE CLOSED</span>
           )}
         </div>
 
@@ -108,7 +108,7 @@ function QuestCard({
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
         >
-          <p className="font-mono text-[10px] text-slate-600 uppercase tracking-wider">Mission Objectives:</p>
+          <p className="font-mono text-[10px] text-slate-600 uppercase tracking-wider">Case Objectives:</p>
           {item.highlights.map((highlight, i) => (
             <motion.div
               key={i}
@@ -127,7 +127,7 @@ function QuestCard({
         {/* XP bar */}
         <div className="mt-5 pt-4 border-t border-gaming-border">
           <div className="flex justify-between items-center mb-2">
-            <span className="font-mono text-[10px] text-slate-600">MISSION_XP</span>
+            <span className="font-mono text-[10px] text-slate-600">CASE_XP</span>
             <span className="font-mono text-[10px] neon-text-cyan">+{(index + 1) * 500} XP</span>
           </div>
           <div className="xp-bar">
@@ -155,13 +155,13 @@ export default function ExperienceSection({ experience }: { experience: Experien
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           className="section-heading mb-4"
-        >Mission Log</motion.h2>
+        >Case Files</motion.h2>
         <motion.p
           initial={{ opacity: 0, x: -20 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="font-mono text-xs text-slate-500 mb-12"
-        >{">"}  MISSION_LOG.retrieve() — {experience.length} MISSIONS ON RECORD</motion.p>
+        >{">"}  CASE_FILES.retrieve() — {experience.length} CASES ON RECORD</motion.p>
         <div className="relative">
           {experience.map((item, i) => (
             <QuestCard key={item.id} item={item} index={i} inView={inView} />

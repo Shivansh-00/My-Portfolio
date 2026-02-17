@@ -35,7 +35,7 @@ export default function GamingFooter() {
               transition={{ type: "spring", stiffness: 200, damping: 12 }}
               className="relative w-10 h-10 border border-neon-cyan/40 rotate-45 flex items-center justify-center cursor-pointer shrink-0"
             >
-              <span className="font-gaming text-xs neon-text-cyan -rotate-45 select-none">SS</span>
+              <span className="font-gaming text-xs neon-text-cyan -rotate-45 select-none">BK</span>
               <motion.div
                 className="absolute inset-0 border border-neon-cyan/15 rotate-0"
                 animate={{ rotate: 360 }}
@@ -62,7 +62,7 @@ export default function GamingFooter() {
                 style={{ boxShadow: "0 0 8px rgba(57,255,20,0.6)" }}
               />
               <span className="font-mono text-[10px] text-slate-500 uppercase whitespace-nowrap">
-                All Webs Connected
+                All Systems Operational
               </span>
             </div>
             <div className="hidden sm:block h-4 w-px bg-gaming-border" />
@@ -116,7 +116,7 @@ export default function GamingFooter() {
           <div className="flex items-center gap-1.5 text-slate-700">
             <span className="font-mono text-[10px]">BUILT WITH</span>
             <motion.span
-              animate={{ color: ["#DC143C", "#1E90FF", "#39ff14", "#DC143C"] }}
+              animate={{ color: ["#D4A853", "#8896A8", "#39ff14", "#D4A853"] }}
               transition={{ duration: 4, repeat: Infinity }}
               className="font-mono text-[10px]"
             >{"</>  &  ♥"}</motion.span>

@@ -54,11 +54,11 @@ export function MagneticCursor() {
             width: hovered ? 56 : 36,
             height: hovered ? 56 : 36,
             borderColor: hovered
-              ? "rgba(30,144,255,0.6)"
-              : "rgba(220,20,60,0.4)",
+              ? "rgba(136,150,168,0.6)"
+              : "rgba(212,168,83,0.4)",
             backgroundColor: hovered
-              ? "rgba(30,144,255,0.05)"
-              : "rgba(220,20,60,0.02)",
+              ? "rgba(136,150,168,0.05)"
+              : "rgba(212,168,83,0.02)",
           }}
           transition={{ type: "spring", stiffness: 400, damping: 25 }}
           className="rounded-full border"
@@ -77,8 +77,8 @@ export function MagneticCursor() {
         <motion.div
           animate={{
             boxShadow: hovered
-              ? "0 0 20px rgba(30,144,255,0.8)"
-              : "0 0 10px rgba(220,20,60,0.6)",
+              ? "0 0 20px rgba(136,150,168,0.8)"
+              : "0 0 10px rgba(212,168,83,0.6)",
           }}
           className="w-full h-full rounded-full"
         />
@@ -164,7 +164,7 @@ export function TiltCard({
           style={{
             opacity: glareOpacity,
             background: `radial-gradient(circle at var(--gx) var(--gy),
-              rgba(220,20,60,0.25) 0%, transparent 60%)`,
+              rgba(212,168,83,0.25) 0%, transparent 60%)`,
             // @ts-ignore
             "--gx": useTransform(glareX, (v) => `${v}%`),
             "--gy": useTransform(glareY, (v) => `${v}%`),
@@ -189,9 +189,9 @@ export function FloatingParticles({ count = 30 }: { count?: number }) {
     delay: Math.random() * 5,
     color:
       i % 3 === 0
-        ? "rgba(220,20,60,0.3)"
+        ? "rgba(212,168,83,0.3)"
         : i % 3 === 1
-        ? "rgba(30,144,255,0.2)"
+        ? "rgba(136,150,168,0.2)"
         : "rgba(57,255,20,0.2)",
   }));
 

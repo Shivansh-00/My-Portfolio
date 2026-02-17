@@ -85,20 +85,20 @@ export default function StatsSection({ github: initialGithub, leetcode: initialL
               <div className="flex items-center gap-3 mb-6">
                 <motion.div
                   className="w-10 h-10 border border-neon-cyan/30 rounded-sm flex items-center justify-center"
-                  whileHover={{ rotate: 180, borderColor: "rgba(220,20,60,0.8)" }}
+                  whileHover={{ rotate: 180, borderColor: "rgba(212,168,83,0.8)" }}
                   transition={{ duration: 0.5 }}
                 >
                   <span className="text-xl">⬡</span>
                 </motion.div>
                 <div>
-                  <h3 className="font-gaming text-sm uppercase tracking-widest neon-text-cyan">GitHub Pulse</h3>
-                  <p className="font-mono text-xs text-slate-500">WEB_LOG::COMMITS</p>
+                  <h3 className="font-gaming text-sm uppercase tracking-widest neon-text-cyan">GitHub Intel</h3>
+                  <p className="font-mono text-xs text-slate-500">BAT_LOG::COMMITS</p>
                 </div>
               </div>
 
               <motion.div
                 className="bg-gaming-dark/50 border border-gaming-border p-4 mb-6"
-                whileHover={{ borderColor: "rgba(220,20,60,0.4)", boxShadow: "inset 0 0 20px rgba(220,20,60,0.05)" }}
+                whileHover={{ borderColor: "rgba(212,168,83,0.4)", boxShadow: "inset 0 0 20px rgba(212,168,83,0.05)" }}
                 transition={{ duration: 0.3 }}
               >
                 <p className="font-mono text-xs text-slate-500 mb-1">RECENT_COMMITS:</p>
@@ -120,7 +120,7 @@ export default function StatsSection({ github: initialGithub, leetcode: initialL
                     target="_blank"
                     rel="noopener noreferrer"
                     variants={staggerItem}
-                    whileHover={{ x: 6, borderColor: "rgba(220,20,60,0.5)" }}
+                    whileHover={{ x: 6, borderColor: "rgba(212,168,83,0.5)" }}
                     className="flex items-center justify-between p-3 bg-gaming-dark/30 border border-gaming-border transition-all duration-300 group"
                   >
                     <span className="font-body text-sm text-slate-300 group-hover:text-neon-cyan transition-colors">{repo.name}</span>
@@ -134,7 +134,7 @@ export default function StatsSection({ github: initialGithub, leetcode: initialL
                   <p className="font-mono text-xs text-slate-500 uppercase tracking-wider">Language Distribution</p>
                   <div className="flex h-2 rounded-full overflow-hidden border border-gaming-border">
                     {github.languages.slice(0, 5).map((lang, i) => {
-                      const colors = ["#DC143C", "#1E90FF", "#39ff14", "#ff6a00", "#a855f7"];
+                      const colors = ["#D4A853", "#8896A8", "#39ff14", "#ff6a00", "#a855f7"];
                       return (
                         <motion.div
                           key={lang.name}
@@ -150,7 +150,7 @@ export default function StatsSection({ github: initialGithub, leetcode: initialL
                   </div>
                   <div className="flex flex-wrap gap-3 text-xs">
                     {github.languages.slice(0, 5).map((lang, i) => {
-                      const colors = ["#DC143C", "#1E90FF", "#39ff14", "#ff6a00", "#a855f7"];
+                      const colors = ["#D4A853", "#8896A8", "#39ff14", "#ff6a00", "#a855f7"];
                       return (
                         <span key={lang.name} className="flex items-center gap-1">
                           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colors[i] }} />
@@ -178,20 +178,20 @@ export default function StatsSection({ github: initialGithub, leetcode: initialL
               <div className="flex items-center gap-3 mb-6">
                 <motion.div
                   className="w-10 h-10 border border-neon-magenta/30 rounded-sm flex items-center justify-center"
-                  whileHover={{ rotate: 180, borderColor: "rgba(30,144,255,0.8)" }}
+                  whileHover={{ rotate: 180, borderColor: "rgba(136,150,168,0.8)" }}
                   transition={{ duration: 0.5 }}
                 >
                   <span className="text-xl">◈</span>
                 </motion.div>
                 <div>
-                  <h3 className="font-gaming text-sm uppercase tracking-widest neon-text-magenta">LeetCode Arena</h3>
+                  <h3 className="font-gaming text-sm uppercase tracking-widest neon-text-magenta">LeetCode Ops</h3>
                   <p className="font-mono text-xs text-slate-500">CHALLENGE_LOG::SOLVED</p>
                 </div>
               </div>
 
               <motion.div
                 className="bg-gaming-dark/50 border border-gaming-border p-4 mb-6"
-                whileHover={{ borderColor: "rgba(30,144,255,0.4)", boxShadow: "inset 0 0 20px rgba(30,144,255,0.05)" }}
+                whileHover={{ borderColor: "rgba(136,150,168,0.4)", boxShadow: "inset 0 0 20px rgba(136,150,168,0.05)" }}
                 transition={{ duration: 0.3 }}
               >
                 <p className="font-mono text-xs text-slate-500 mb-1">TOTAL_SOLVED:</p>

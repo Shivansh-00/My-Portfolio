@@ -153,16 +153,16 @@ export default function BreachGateway({ children }: { children: React.ReactNode 
 
                   {phase === "breaching" && (
                     <div className="absolute inset-0 pointer-events-none"
-                      style={{ background: "repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(220,20,60,0.015) 2px, rgba(220,20,60,0.015) 4px)" }} />
+                      style={{ background: "repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(212,168,83,0.015) 2px, rgba(212,168,83,0.015) 4px)" }} />
                   )}
 
                   {phase === "locked" && (
                     <div className="relative z-10 flex flex-col items-center justify-center h-full min-h-[200px] gap-5">
                       <motion.div
                         animate={{ boxShadow: [
-                          "0 0 20px rgba(220,20,60,0.2)",
-                          "0 0 40px rgba(220,20,60,0.4)",
-                          "0 0 20px rgba(220,20,60,0.2)",
+                          "0 0 20px rgba(212,168,83,0.2)",
+                          "0 0 40px rgba(212,168,83,0.4)",
+                          "0 0 20px rgba(212,168,83,0.2)",
                         ]}}
                         transition={{ duration: 3, repeat: Infinity }}
                         className="w-20 h-20 border-2 border-neon-cyan/40 rounded-full flex items-center justify-center"
@@ -175,13 +175,13 @@ export default function BreachGateway({ children }: { children: React.ReactNode 
                       </motion.div>
 
                       <div className="text-center">
-                        <p className="font-gaming text-sm tracking-widest text-slate-400 mb-1">CLASSIFIED WEB PROJECTS</p>
+                        <p className="font-gaming text-sm tracking-widest text-slate-400 mb-1">CLASSIFIED DARK PROJECTS</p>
                         <p className="font-mono text-xs text-slate-600">Security clearance required</p>
                       </div>
 
                       <motion.button
                         onClick={initiateBreach}
-                        whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(220,20,60,0.3), 0 0 60px rgba(220,20,60,0.1)" }}
+                        whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(212,168,83,0.3), 0 0 60px rgba(212,168,83,0.1)" }}
                         whileTap={{ scale: 0.96 }}
                         className="relative gaming-btn liquid-btn !px-10 !py-3.5"
                       >
@@ -209,13 +209,13 @@ export default function BreachGateway({ children }: { children: React.ReactNode 
                         <motion.div className="h-full rounded-full"
                           animate={{ width: `${progress}%` }}
                           transition={{ duration: 0.4, ease: "easeOut" }}
-                          style={{ background: "linear-gradient(90deg, #DC143C, #a855f7, #1E90FF)",
-                            boxShadow: "0 0 10px rgba(220,20,60,0.5), 0 0 20px rgba(220,20,60,0.2)" }} />
+                          style={{ background: "linear-gradient(90deg, #D4A853, #6B5B95, #8896A8)",
+                            boxShadow: "0 0 10px rgba(212,168,83,0.5), 0 0 20px rgba(212,168,83,0.2)" }} />
                         <motion.div
                           className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-neon-cyan"
                           animate={{ left: `${progress}%` }}
                           transition={{ duration: 0.4, ease: "easeOut" }}
-                          style={{ boxShadow: "0 0 12px rgba(220,20,60,0.8)", marginLeft: -6 }} />
+                          style={{ boxShadow: "0 0 12px rgba(212,168,83,0.8)", marginLeft: -6 }} />
                       </div>
 
                       <div className="space-y-0.5 font-mono text-[11px] text-neon-green/60">
@@ -236,7 +236,7 @@ export default function BreachGateway({ children }: { children: React.ReactNode 
                           <div key={i} className="flex items-center gap-3">
                             <div className={`w-2.5 h-2.5 rounded-full border transition-all duration-500 ${
                               i <= scanLine
-                                ? "bg-neon-cyan border-neon-cyan shadow-[0_0_8px_rgba(220,20,60,0.6)]"
+                                ? "bg-neon-cyan border-neon-cyan shadow-[0_0_8px_rgba(212,168,83,0.6)]"
                                 : "border-slate-700"
                             }`} />
                             {i < SCAN_LINES.length - 1 && (

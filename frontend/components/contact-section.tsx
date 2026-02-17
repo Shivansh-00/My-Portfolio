@@ -15,13 +15,13 @@ export default function ContactSection({ profile }: { profile: Profile }) {
         <motion.h2
           variants={headingReveal} initial="hidden" animate={inView ? "visible" : "hidden"}
           className="section-heading mb-4"
-        >Web Signal</motion.h2>
+        >Bat Signal</motion.h2>
         <motion.p
           initial={{ opacity: 0, x: -20 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="font-mono text-xs text-slate-500 mb-12"
-        >{">"}  WEB_SIGNAL.open() — READY TO RECEIVE TRANSMISSIONS</motion.p>
+        >{">"}  BAT_SIGNAL.open() — READY TO RECEIVE TRANSMISSIONS</motion.p>
 
         <div className="grid gap-8 md:grid-cols-5">
           {/* Contact Info Panel */}
@@ -77,7 +77,7 @@ export default function ContactSection({ profile }: { profile: Profile }) {
                     animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   />
-                  <span className="font-mono text-[10px] text-slate-600">WEB_STATUS: CONNECTED</span>
+                  <span className="font-mono text-[10px] text-slate-600">BAT_STATUS: CONNECTED</span>
                 </div>
               </div>
             </div>
