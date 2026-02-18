@@ -15,6 +15,10 @@ import {
   staticGithub,
   staticLeetcode,
 } from "@/lib/static-data";
+import { fetchGitHubStats, fetchLeetCodeStats } from "@/lib/fetch-stats";
+
+/* ISR — revalidate the page every 5 minutes so stats stay fresh */
+export const revalidate = 300;
 
 function SectionDivider({ variant = "cyan" }: { variant?: "cyan" | "magenta" | "green" | "multi" }) {
   const gradients: Record<string, string> = {
@@ -51,12 +55,29 @@ function SectionDivider({ variant = "cyan" }: { variant?: "cyan" | "magenta" | "
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  /* Fetch both data sources in parallel at the server.
+     If either fails, fall back to static zeros. */
+  const [ghResult, lcResult] = await Promise.allSettled([
+    fetchGitHubStats(),
+    fetchLeetCodeStats(),
+  ]);
+
+  const github =
+    ghResult.status === "fulfilled" && ghResult.value.topRepos.length > 0
+      ? ghResult.value
+      : staticGithub;
+
+  const leetcode =
+    lcResult.status === "fulfilled" && lcResult.value.totalSolved > 0
+      ? lcResult.value
+      : staticLeetcode;
+
   return (
     <GamingShell>
       <HeroSection profile={staticProfile} />
       <SectionDivider variant="cyan" />
-      <StatsSection github={staticGithub} leetcode={staticLeetcode} />
+      <StatsSection github={github} leetcode={leetcode} />
       <SectionDivider variant="magenta" />
       <SkillsSection skills={staticSkills} />
       <SectionDivider variant="green" />

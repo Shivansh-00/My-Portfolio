@@ -155,7 +155,7 @@ export default function HeroSection({ profile }: { profile: Profile }) {
         {/* Name */}
         <motion.div variants={scaleIn} initial="hidden" animate="visible" transition={{ delay: 0.3 }}>
           <h1
-            className="font-gaming text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-wider neon-text-cyan mb-4 whitespace-nowrap chromatic-text"
+            className="font-gaming text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-wide sm:tracking-wider neon-text-cyan mb-4 chromatic-text"
             style={{ cursor: "default" }}
           >
             SHIVANSH SRIVASTAVA

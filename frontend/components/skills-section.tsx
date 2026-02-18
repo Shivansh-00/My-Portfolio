@@ -73,7 +73,7 @@ function SkillCategoryCard({
             <span className="text-lg neon-text-cyan">{icon}</span>
           </motion.div>
           <div>
-            <h3 className="font-gaming text-sm uppercase tracking-widest neon-text-cyan">
+            <h3 className="font-gaming text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest neon-text-cyan truncate max-w-[140px] sm:max-w-none">
               {category.name}
             </h3>
             <p className="font-mono text-[10px] text-slate-600">
@@ -121,7 +121,7 @@ export default function SkillsSection({ skills }: { skills: SkillCategory[] }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section id="skills" ref={ref} className="gaming-section py-20 lg:pl-20">
+    <section id="skills" ref={ref} className="gaming-section py-12 md:py-20 lg:pl-20">
       <div className="max-w-6xl mx-auto px-4">
         <motion.h2
           variants={headingReveal}

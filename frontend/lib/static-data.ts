@@ -186,14 +186,26 @@ export const staticProjects: Project[] = [
 ];
 
 export const staticGithub: GitHubStats = {
-  topRepos: [],
-  languages: [],
-  recentCommits: 0,
+  topRepos: [
+    { name: "My-Portfolio", url: "https://github.com/Shivansh-00/My-Portfolio", stars: 3 },
+    { name: "Integrated-Management-Business-Suite", url: "https://github.com/Shivansh-00/Integrated-Management-Business-Suite", stars: 3 },
+    { name: "Option-Pricing-Using-Monte-Carlo-Simulation-Deep-Learning", url: "https://github.com/Shivansh-00/Option-Pricing-Using-Monte-Carlo-Simulation-Deep-Learning", stars: 3 },
+    { name: "To-Do-List", url: "https://github.com/Shivansh-00/To-Do-List", stars: 2 },
+    { name: "Chat-Application", url: "https://github.com/Shivansh-00/Chat-Application", stars: 1 },
+  ],
+  languages: [
+    { name: "TypeScript", percentage: 38 },
+    { name: "Python", percentage: 27 },
+    { name: "JavaScript", percentage: 18 },
+    { name: "C++", percentage: 10 },
+    { name: "HTML", percentage: 7 },
+  ],
+  recentCommits: 24,
 };
 
 export const staticLeetcode: LeetCodeStats = {
-  totalSolved: 0,
-  easy: 0,
-  medium: 0,
-  hard: 0,
+  totalSolved: 346,
+  easy: 110,
+  medium: 182,
+  hard: 54,
 };

@@ -35,7 +35,7 @@ export default function GamingFooter() {
               transition={{ type: "spring", stiffness: 200, damping: 12 }}
               className="relative w-10 h-10 border border-neon-cyan/40 rotate-45 flex items-center justify-center cursor-pointer shrink-0"
             >
-              <span className="font-gaming text-xs neon-text-cyan -rotate-45 select-none">BK</span>
+              <span className="font-gaming text-xs neon-text-cyan -rotate-45 select-none">SS</span>
               <motion.div
                 className="absolute inset-0 border border-neon-cyan/15 rotate-0"
                 animate={{ rotate: 360 }}

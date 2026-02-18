@@ -105,7 +105,7 @@ function ProjectCard({
         {project.tags.map((tag, i) => (
           <motion.span
             key={tag}
-            className="font-mono text-[10px] px-2 py-0.5 border border-gaming-border text-slate-500
+            className="font-mono text-[11px] sm:text-[10px] px-2.5 py-1 sm:px-2 sm:py-0.5 border border-gaming-border text-slate-500
                        bg-gaming-dark/50 uppercase tracking-wider
                        group-hover:border-neon-cyan/30 group-hover:text-slate-400 transition-all duration-300"
             whileHover={{ scale: 1.1, borderColor: "rgba(212,168,83,0.6)", color: "#D4A853" }}
@@ -158,7 +158,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
   const others = projects.filter((p) => !p.featured);
 
   return (
-    <section id="projects" ref={ref} className="gaming-section py-20 lg:pl-20">
+    <section id="projects" ref={ref} className="gaming-section py-12 md:py-20 lg:pl-20">
       <div className="max-w-6xl mx-auto px-4">
         <motion.h2
           variants={headingReveal} initial="hidden" animate={inView ? "visible" : "hidden"}

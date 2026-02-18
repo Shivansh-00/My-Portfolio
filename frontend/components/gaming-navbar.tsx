@@ -65,7 +65,7 @@ export default function GamingNavbar() {
           transition={{ type: "spring", stiffness: 300, damping: 15 }}
         >
           <div className="w-8 h-8 border border-neon-cyan/40 rotate-45 flex items-center justify-center cursor-pointer">
-            <span className="font-gaming text-[10px] neon-text-cyan -rotate-45">BK</span>
+            <span className="font-gaming text-[10px] neon-text-cyan -rotate-45">SS</span>
           </div>
         </motion.div>
 
@@ -130,7 +130,7 @@ export default function GamingNavbar() {
       >
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 border border-neon-cyan/40 rotate-45 flex items-center justify-center">
-            <span className="font-gaming text-[9px] neon-text-cyan -rotate-45">BK</span>
+            <span className="font-gaming text-[9px] neon-text-cyan -rotate-45">SS</span>
           </div>
           <span className="font-gaming text-xs tracking-widest text-slate-400">PORTFOLIO</span>
         </div>
@@ -157,7 +157,7 @@ export default function GamingNavbar() {
             animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-30 bg-gaming-dark/95 flex flex-col items-center justify-center gap-6 lg:hidden"
+            className="fixed inset-0 z-30 bg-gaming-dark/95 flex flex-col items-center justify-center gap-4 sm:gap-6 lg:hidden overflow-y-auto py-16"
           >
             {navItems.map((item, i) => (
               <motion.button
@@ -169,7 +169,7 @@ export default function GamingNavbar() {
                 onClick={() => handleNavClick(item.href)}
                 whileHover={{ x: 8, scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`font-gaming text-lg tracking-[0.3em] uppercase transition-colors duration-300 flex items-center gap-4
+                className={`font-gaming text-base sm:text-lg tracking-[0.15em] sm:tracking-[0.3em] uppercase transition-colors duration-300 flex items-center gap-3 sm:gap-4
                   ${activeSection === item.href.slice(1) ? "neon-text-cyan" : "text-slate-500 hover:text-slate-200"}`}
               >
                 <span className="text-xl">{item.icon}</span>

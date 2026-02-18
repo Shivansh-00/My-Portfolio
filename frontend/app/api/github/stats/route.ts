@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { staticGithub } from "@/lib/static-data";
 
 const GITHUB_API = "https://api.github.com";
 
@@ -12,7 +13,18 @@ interface GitHubRepo {
   languages_url: string;
 }
 
+/* ── Server-side response cache so repeated client requests don't re-hit GitHub ── */
+let cachedResponse: { data: Record<string, unknown>; ts: number } | null = null;
+const CACHE_TTL = 5 * 60 * 1000; // 5 min
+
 export async function GET() {
+  // Return cached response if fresh
+  if (cachedResponse && Date.now() - cachedResponse.ts < CACHE_TTL) {
+    return NextResponse.json(cachedResponse.data, {
+      headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" },
+    });
+  }
+
   try {
     const username = "Shivansh-00";
     const headers: Record<string, string> = {
@@ -22,17 +34,23 @@ export async function GET() {
       headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
     }
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+
     const reposRes = await fetch(
       `${GITHUB_API}/users/${username}/repos?per_page=100&sort=updated`,
-      { headers, next: { revalidate: 3600 } }
+      { headers, signal: controller.signal, next: { revalidate: 300 } }
     );
 
     if (!reposRes.ok) {
-      return NextResponse.json({
-        topRepos: [],
-        languages: [],
-        recentCommits: 0,
-      });
+      clearTimeout(timeout);
+      // If rate-limited, return stale cache if available
+      if (cachedResponse) {
+        return NextResponse.json(cachedResponse.data, {
+          headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=600" },
+        });
+      }
+      return NextResponse.json(staticGithub);
     }
 
     const repos = (await reposRes.json()) as GitHubRepo[];
@@ -65,20 +83,29 @@ export async function GET() {
 
     const eventsRes = await fetch(
       `${GITHUB_API}/users/${username}/events?per_page=100`,
-      { headers, next: { revalidate: 3600 } }
+      { headers, signal: controller.signal, next: { revalidate: 300 } }
     );
+    clearTimeout(timeout);
+
     let recentCommits = 0;
     if (eventsRes.ok) {
       const events = (await eventsRes.json()) as { type: string }[];
       recentCommits = events.filter((e) => e.type === "PushEvent").length;
     }
 
-    return NextResponse.json({ topRepos, languages, recentCommits });
-  } catch {
-    return NextResponse.json({
-      topRepos: [],
-      languages: [],
-      recentCommits: 0,
+    const data = { topRepos, languages, recentCommits };
+    cachedResponse = { data, ts: Date.now() };
+
+    return NextResponse.json(data, {
+      headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" },
     });
+  } catch {
+    // On any error, return stale cache if available
+    if (cachedResponse) {
+      return NextResponse.json(cachedResponse.data, {
+        headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=600" },
+      });
+    }
+    return NextResponse.json(staticGithub);
   }
 }

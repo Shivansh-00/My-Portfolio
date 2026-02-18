@@ -10,7 +10,7 @@ export default function ContactSection({ profile }: { profile: Profile }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section id="contact" ref={ref} className="gaming-section py-20 lg:pl-20">
+    <section id="contact" ref={ref} className="gaming-section py-12 md:py-20 lg:pl-20">
       <div className="max-w-4xl mx-auto px-4">
         <motion.h2
           variants={headingReveal} initial="hidden" animate={inView ? "visible" : "hidden"}
@@ -57,14 +57,15 @@ export default function ContactSection({ profile }: { profile: Profile }) {
                     whileHover={{ x: 6 }}
                   >
                     <motion.div
-                      className={`w-8 h-8 border border-gaming-border flex items-center justify-center group-hover:border-${link.color}/60 transition-all duration-300`}
-                      whileHover={{ rotate: 90, scale: 1.1 }}
+                      className="w-8 h-8 border border-gaming-border flex items-center justify-center transition-all duration-300"
+                      style={{ borderColor: undefined }}
+                      whileHover={{ rotate: 90, scale: 1.1, borderColor: link.color === "neon-cyan" ? "rgba(212,168,83,0.6)" : link.color === "neon-magenta" ? "rgba(136,150,168,0.6)" : "rgba(57,255,20,0.6)" }}
                     >
                       <span className="text-sm">{link.icon}</span>
                     </motion.div>
                     <div>
-                      <p className="font-mono text-[10px] text-slate-600 uppercase">{link.label}</p>
-                      <p className={`font-body text-sm text-slate-400 group-hover:text-${link.color} transition-colors`}>{link.text}</p>
+                      <p className="font-mono text-[10px] sm:text-[11px] text-slate-600 uppercase">{link.label}</p>
+                      <p className="font-body text-xs sm:text-sm text-slate-400 group-hover:text-slate-200 transition-colors truncate max-w-[180px] sm:max-w-none">{link.text}</p>
                     </div>
                   </motion.a>
                 ))}

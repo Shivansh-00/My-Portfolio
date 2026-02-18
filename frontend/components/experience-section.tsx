@@ -148,7 +148,7 @@ export default function ExperienceSection({ experience }: { experience: Experien
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section id="experience" ref={ref} className="gaming-section py-20 lg:pl-20">
+    <section id="experience" ref={ref} className="gaming-section py-12 md:py-20 lg:pl-20">
       <div className="max-w-4xl mx-auto px-4">
         <motion.h2
           variants={headingReveal}

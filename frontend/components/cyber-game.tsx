@@ -233,7 +233,7 @@ export default function CyberGame() {
   const config = LEVEL_CONFIG[level];
 
   return (
-    <section id="game" className="gaming-section py-20 lg:pl-20 relative">
+    <section id="game" className="gaming-section py-12 md:py-20 lg:pl-20 relative">
       <div className="grid-overlay" />
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-8">
